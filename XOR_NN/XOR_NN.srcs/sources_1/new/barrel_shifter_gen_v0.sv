@@ -13,14 +13,14 @@
 // 
 // Dependencies: provide precision and mantisa number of bits
 // 
-// Revision:
+// Revision: 0.02 adjusted paramter n and shift_max to take mantissa value
 // Revision 0.01 - File Created
 // Additional Comments: I am not considering opto in this generation, I shall focus only on functionality. Internal parameters are not yet stated.
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module barrel_shifter_gen_v0 #(parameter int n = 64, int shift_max = $clog2(52), direction = 1) (
+module barrel_shifter_gen_v0 #(parameter int n = 53, int shift_max = $clog2(n), direction = 1) (
     input [n-1:0] A,
     input [shift_max-1:0] shift,
     //input direction, // 0 for left, 1 for right
