@@ -102,14 +102,14 @@ leading_zero_detector_gen_v0 lzd (
 //Configuring Barrel Shifter to shift the mantissa of the result based on the leading zeros
 
 logic [53:0] Res_temp;
-barrel_shifter_gen_v0 #(.n(54), .shift_max(8), .direction(0)) barrel_shifter_final (
+barrel_shifter_gen_v0 #(.n(54), .shift_max(8), .direction(0)) barrel_shifter_normalize (
     .A(Res_mantissa),
     .shift(leading_zeros),
     .A_shift(Res_temp)
 );
 
-assign Res[51:0] = Res_mantissa[53] ? {Res_temp[50:0],1'b0} : Res_temp [51:0]; // Shift left if the result mantissa is negative
-assign Res[62:52] = A_exponent + B_exponent - leading_zeros; // Adjust the exponent based on the leading zeros
+assign Res[51:0] = Res_mantissa[53] ? Res_temp[52:1] : Res_temp [51:0]; // Shift left if the result mantissa is negative
+assign Res[62:52] = A_exponent - leading_zeros + 1'b1; // Adjust the exponent based on the leading zeros
 assign Res[63] = Res_sign; // Set the sign bit based on the result sign
 
 endmodule

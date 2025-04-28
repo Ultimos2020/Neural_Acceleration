@@ -13,7 +13,7 @@
 // 
 // Dependencies: 
 // 
-// Revision:
+// Revision: 0.02 Improved logic for calculating total shift.
 // Revision 0.01 - File Created
 // Additional Comments: Current implementation is yet to be tested for maximum shift magitude.
 // 
@@ -91,7 +91,7 @@ always_comb begin : Intra_group_sel
     end
 end
 
-assign leading_1 = {3'b000, group_intra_val} + {group_val, 3'b000};
-assign shift = 6'd52 - leading_1;
+assign leading_1 = {4'b0000, group_intra_val} + {1'b0,group_val, 3'b000};
+assign shift = 7'd53 - leading_1;
 
 endmodule

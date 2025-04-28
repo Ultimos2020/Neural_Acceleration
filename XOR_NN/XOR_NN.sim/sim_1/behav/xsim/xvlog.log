@@ -10,5 +10,3 @@ INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/Users/ratne/Desktop/Neural
 INFO: [VRFC 10-311] analyzing module mantissa_alu_gen_vo
 INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/Users/ratne/Desktop/Neural_Acceleration/XOR_NN/XOR_NN.srcs/sim_1/new/adder_gen_v0_test.sv" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module adder_gen_v0_test
-INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/ratne/Desktop/Neural_Acceleration/XOR_NN/XOR_NN.sim/sim_1/behav/xsim/glbl.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module glbl
