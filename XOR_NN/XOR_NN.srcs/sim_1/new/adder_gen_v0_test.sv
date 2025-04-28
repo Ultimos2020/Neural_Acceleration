@@ -37,7 +37,7 @@ logic [63:0] Res;
 initial begin
     // Test case 1: A + B
     A = 64'h4000000000000000; // 2.0
-    B = 64'h4008000000000000; // 3.0
+    B = 64'h4024000000000000; // 10.0
     operation = 3'b001; // Addition
     #10;
     
@@ -49,7 +49,7 @@ initial begin
 
     // Test case 3: Invalid operation
     A = 64'h4000000000000000; // 2.0
-    B = 64'h4008000000000000; // 3.0
+    B = 64'h4024000000000000; // 10.0
     operation = 3'b000; // Invalid operation
     #10;
 

@@ -3,9 +3,9 @@
 Sep  5 2024
 15:23:16
 C:/Users/ratne/Desktop/Neural_Acceleration/XOR_NN/XOR_NN.sim/sim_1/behav/xsim/glbl.v,1708598507,verilog,,,,glbl,,uvm,,,,,,
-C:/Users/ratne/Desktop/Neural_Acceleration/XOR_NN/XOR_NN.srcs/sim_1/new/adder_gen_v0_test.sv,1745811603,systemVerilog,,,,adder_gen_v0_test,,uvm,,,,,,
+C:/Users/ratne/Desktop/Neural_Acceleration/XOR_NN/XOR_NN.srcs/sim_1/new/adder_gen_v0_test.sv,1745851758,systemVerilog,,,,adder_gen_v0_test,,uvm,,,,,,
 C:/Users/ratne/Desktop/Neural_Acceleration/XOR_NN/XOR_NN.srcs/sources_1/new/barrel_shifter_gen_v0.sv,1745756694,systemVerilog,,C:/Users/ratne/Desktop/Neural_Acceleration/XOR_NN/XOR_NN.srcs/sources_1/new/double_precision_floating_adder_gen_v0.sv,,barrel_shifter_gen_v0,,uvm,,,,,,
-C:/Users/ratne/Desktop/Neural_Acceleration/XOR_NN/XOR_NN.srcs/sources_1/new/double_precision_floating_adder_gen_v0.sv,1745811280,systemVerilog,,C:/Users/ratne/Desktop/Neural_Acceleration/XOR_NN/XOR_NN.srcs/sources_1/new/expo_alu_gen_v0.sv,,double_precision_floating_adder_gen_v0,,uvm,,,,,,
+C:/Users/ratne/Desktop/Neural_Acceleration/XOR_NN/XOR_NN.srcs/sources_1/new/double_precision_floating_adder_gen_v0.sv,1745856827,systemVerilog,,C:/Users/ratne/Desktop/Neural_Acceleration/XOR_NN/XOR_NN.srcs/sources_1/new/expo_alu_gen_v0.sv,,double_precision_floating_adder_gen_v0,,uvm,,,,,,
 C:/Users/ratne/Desktop/Neural_Acceleration/XOR_NN/XOR_NN.srcs/sources_1/new/expo_alu_gen_v0.sv,1745683470,systemVerilog,,C:/Users/ratne/Desktop/Neural_Acceleration/XOR_NN/XOR_NN.srcs/sources_1/new/leading_zero_detector_gen_v0.sv,,expo_alu_gen_v0,,uvm,,,,,,
-C:/Users/ratne/Desktop/Neural_Acceleration/XOR_NN/XOR_NN.srcs/sources_1/new/leading_zero_detector_gen_v0.sv,1745809148,systemVerilog,,C:/Users/ratne/Desktop/Neural_Acceleration/XOR_NN/XOR_NN.srcs/sources_1/new/mantissa_alu_gen_vo.sv,,leading_zero_detector_gen_v0,,uvm,,,,,,
+C:/Users/ratne/Desktop/Neural_Acceleration/XOR_NN/XOR_NN.srcs/sources_1/new/leading_zero_detector_gen_v0.sv,1745855876,systemVerilog,,C:/Users/ratne/Desktop/Neural_Acceleration/XOR_NN/XOR_NN.srcs/sources_1/new/mantissa_alu_gen_vo.sv,,leading_zero_detector_gen_v0,,uvm,,,,,,
 C:/Users/ratne/Desktop/Neural_Acceleration/XOR_NN/XOR_NN.srcs/sources_1/new/mantissa_alu_gen_vo.sv,1745756693,systemVerilog,,C:/Users/ratne/Desktop/Neural_Acceleration/XOR_NN/XOR_NN.srcs/sim_1/new/adder_gen_v0_test.sv,,mantissa_alu_gen_vo,,uvm,,,,,,
