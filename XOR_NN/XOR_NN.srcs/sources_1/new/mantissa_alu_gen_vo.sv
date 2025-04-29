@@ -53,8 +53,8 @@ always_comb begin
             Res_sign = select ? 1'b1 : 1'b0;
         end
         2'b10: begin // B - A
-            Res_mantissa_temp = B_mantissa_pretended + A_mantissa_complemented;
-            Res_mantissa = ~select ? ~Res_mantissa_temp + 1'b1 : Res_mantissa_temp;
+            Res_mantissa_temp = B_mantissa_pretended - A_mantissa_pretended;
+            Res_mantissa = Res_mantissa_temp;
             Res_sign = ~select ? 1'b1 : 1'b0;
         end
         2'b11: begin // -A - B
