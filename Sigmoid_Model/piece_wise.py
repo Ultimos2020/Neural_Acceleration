@@ -30,7 +30,7 @@ def point_extractor(x):
     """For a symmetry"""
     x5 = x/4
     x6 = 0.75*x
-    x7 = x + x5
+    x7 = x + x/2
     x8 = 3.715020 
     #x + x6
     x1 = -x8
@@ -112,8 +112,8 @@ def error_measure(x1, x2, x3, x4, x5, x6, x7, x8, m0, c0, m1, c1, m2, c2, m3, c3
             y = m8*x + c8
         error = y_true - y
         error = abs(error)
-        if error > 0.090736 and x > 0:
-            print(f"error = {error:.6f} at x = {x:.6f}")
+        #if error > 0.023878 and x < 5 and x > x7+ 0.1:
+            #print(f"error = {error:.6f} at x = {x:.6f}")
             #breakpoint()            
         extrema(error,x)
         error_2 = error ** 2 + error_2
@@ -164,8 +164,8 @@ def main():
         z2 = sigmoid_derivative_2(x)
         extrema(z2,x)
         #print(f"x = {x:6.2f} → sigmoid(x) = {y:.6f} → sigmoid'(x) = {z:.6f} -> sigmoid''(x) = {z2:.6f}")
-    #print(f"max = {max:.6f} at x = {max_x:.6f}")
-    #print(f"min = {min:.6f} at x = {min_x:.6f}")
+    print(f"max = {max:.6f} at x = {max_x:.6f}")
+    print(f"min = {min:.6f} at x = {min_x:.6f}")
     x1, x2, x3, x4, x5, x6, x7, x8 = point_extractor(min_x)
     max = -100000000
     max_x = 0
@@ -177,7 +177,7 @@ def main():
 
 
     print(f"max = {max:.6f} at x = {max_x:.6f}")
-    print(f"min = {min:.6f} at x = {min_x:.6f}")
+    #print(f"min = {min:.6f} at x = {min_x:.6f}")
 
 if __name__ == "__main__":
     main()
