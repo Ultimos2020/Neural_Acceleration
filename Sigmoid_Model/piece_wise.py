@@ -28,14 +28,16 @@ def sigmoid_derivative_2(x):
 
 def point_extractor(x):
     """For a symmetry"""
-    x4 = -x/2
-    x5 = -x
-    x6 = -x - x/2
-    x1 = -x6
-    x2 = -x5
-    x3 = -x4
+    x5 = x/4
+    x6 = 0.75*x
+    x7 = x + x5
+    x8 = x + x6
+    x1 = -x8
+    x2 = -x7
+    x3 = -x6
+    x4 = -x5
     #print(f"x1 = {x1:.6f}, x2 = {x2:.6f}, x3 = {x3:.6f}, x4 = {x4:.6f}, x5 = {x5:.6f}, x6 = {x6:.6f}")
-    return x1, x2, x3, x4, x5, x6
+    return x1, x2, x3, x4, x5, x6, x7, x8
 
 def extrema(y,x):
     """Find the extrema of the sigmoid function."""
@@ -47,7 +49,7 @@ def extrema(y,x):
         min = y
         min_x = x
 
-def piece_wise(x1, x2, x3, x4, x5, x6):
+def piece_wise(x1, x2, x3, x4, x5, x6, x7, x8):
     m0 = 0
     c0 = 0
     #print("x3-x2", x3-x2)
@@ -61,19 +63,25 @@ def piece_wise(x1, x2, x3, x4, x5, x6):
     c4 = intercept(x4,x5)
     m5 = (sigmoid(x6)-sigmoid(x5))/(x6-x5)
     c5 = intercept(x5,x6)
-    m6 = 0
-    c6 = 1
+    m6 = (sigmoid(x7)-sigmoid(x6))/(x7-x6)
+    c6 = intercept(x6,x7)
+    m7 = (sigmoid(x8)-sigmoid(x7))/(x8-x7)
+    c7 = intercept(x7,x8)
+    m8 = 0
+    c8 = 1
     print(f" y = {m0:.6f}*x + {c0:.6f} for x < {x1:.6f}")
     print(f" y = {m1:.6f}*x + {c1:.6f} for {x1:.6f} <= x < {x2:.6f}")
     print(f" y = {m2:.6f}*x + {c2:.6f} for {x2:.6f} <= x < {x3:.6f}")
     print(f" y = {m3:.6f}*x + {c3:.6f} for {x3:.6f} <= x < {x4:.6f}")
     print(f" y = {m4:.6f}*x + {c4:.6f} for {x4:.6f} <= x < {x5:.6f}")
     print(f" y = {m5:.6f}*x + {c5:.6f} for {x5:.6f} <= x < {x6:.6f}")
-    print(f" y = {m6:.6f}*x + {c6:.6f} for x >= {x6:.6f}")
-    return m0, c0, m1, c1, m2, c2, m3, c3, m4, c4, m5, c5, m6, c6
+    print(f" y = {m6:.6f}*x + {c6:.6f} for {x6:.6f} <= x < {x7:.6f}")
+    print(f" y = {m7:.6f}*x + {c7:.6f} for {x7:.6f} <= x < {x8:.6f}")
+    print(f" y = {m8:.6f}*x + {c8:.6f} for {x8:.6f} <= x")
+    return m0, c0, m1, c1, m2, c2, m3, c3, m4, c4, m5, c5, m6, c6, m7, c7, m8, c8
 
 rows = []
-def error_measure(x1, x2, x3, x_4, x_5, x_6, m0, c0, m1, c1, m2, c2, m3, c3, m4, c4, m5, c5, m6, c6):
+def error_measure(x1, x2, x3, x4, x5, x6, x7, x8, m0, c0, m1, c1, m2, c2, m3, c3, m4, c4, m5, c5, m6, c6, m7, c7, m8, c8):
     #start = -15.0   # lower bound of x
     #end   =  15.0   # upper bound of x
     #step  =  0.001   # step size
@@ -89,14 +97,18 @@ def error_measure(x1, x2, x3, x_4, x_5, x_6, m0, c0, m1, c1, m2, c2, m3, c3, m4,
             y = m1*x + c1
         elif x2 <= x < x3:
             y = m2*x + c2
-        elif x3 <= x < x_4:
+        elif x3 <= x < x4:
             y = m3*x + c3
-        elif x_4 <= x < x_5:
+        elif x4 <= x < x5:
             y = m4*x + c4
-        elif x_5 <= x < x_6:
+        elif x5 <= x < x6:
             y = m5*x + c5
-        else:
+        elif x6 <= x < x7:
             y = m6*x + c6
+        elif x7 <= x < x8:
+            y = m7*x + c7
+        else:
+            y = m8*x + c8
         error = y_true - y
         error = abs(error)
         extrema(error,x)
@@ -150,14 +162,14 @@ def main():
         #print(f"x = {x:6.2f} → sigmoid(x) = {y:.6f} → sigmoid'(x) = {z:.6f} -> sigmoid''(x) = {z2:.6f}")
     #print(f"max = {max:.6f} at x = {max_x:.6f}")
     #print(f"min = {min:.6f} at x = {min_x:.6f}")
-    x1, x2, x3, x4, x5, x6 = point_extractor(max_x)
+    x1, x2, x3, x4, x5, x6, x7, x8 = point_extractor(min_x)
     max = -100000000
     max_x = 0
     min = 100000000
     min_x = 0
    
-    m0, c0, m1, c1, m2, c2, m3, c3, m4, c4, m5, c5, m6, c6 = piece_wise(x1, x2, x3, x4, x5, x6)
-    error_measure(x1, x2, x3, x4, x5, x6, m0, c0, m1, c1, m2, c2, m3, c3, m4, c4, m5, c5, m6, c6)
+    m0, c0, m1, c1, m2, c2, m3, c3, m4, c4, m5, c5, m6, c6, m7, c7, m8, c8 = piece_wise(x1, x2, x3, x4, x5, x6, x7, x8)
+    error_measure(x1, x2, x3, x4, x5, x6, x7, x8, m0, c0, m1, c1, m2, c2, m3, c3, m4, c4, m5, c5, m6, c6, m7, c7, m8, c8)
 
 
     print(f"max = {max:.6f} at x = {max_x:.6f}")
