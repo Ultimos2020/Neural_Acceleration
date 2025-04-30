@@ -31,7 +31,8 @@ def point_extractor(x):
     x5 = x/4
     x6 = 0.75*x
     x7 = x + x5
-    x8 = x + x6
+    x8 = 3.715020 
+    #x + x6
     x1 = -x8
     x2 = -x7
     x3 = -x6
@@ -111,6 +112,9 @@ def error_measure(x1, x2, x3, x4, x5, x6, x7, x8, m0, c0, m1, c1, m2, c2, m3, c3
             y = m8*x + c8
         error = y_true - y
         error = abs(error)
+        if error > 0.090736 and x > 0:
+            print(f"error = {error:.6f} at x = {x:.6f}")
+            #breakpoint()            
         extrema(error,x)
         error_2 = error ** 2 + error_2
         x_total = x_total + x
