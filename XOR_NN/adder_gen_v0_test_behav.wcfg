@@ -11,15 +11,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="0.000 ns"></ZoomStartTime>
-      <ZoomEndTime time="3.268 ns"></ZoomEndTime>
-      <Cursor1Time time="5.875 ns"></Cursor1Time>
+      <ZoomStartTime time="5.000 ns"></ZoomStartTime>
+      <ZoomEndTime time="35.001 ns"></ZoomEndTime>
+      <Cursor1Time time="12.691 ns"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="276"></NameColumnWidth>
-      <ValueColumnWidth column_width="111"></ValueColumnWidth>
+      <ValueColumnWidth column_width="107"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="31" />
+   <WVObjectSize size="33" />
    <wvobject fp_name="/adder_gen_v0_test/A" type="array">
       <obj_property name="ElementShortName">A[63:0]</obj_property>
       <obj_property name="ObjectShortName">A[63:0]</obj_property>
@@ -40,17 +40,21 @@
       <obj_property name="ElementShortName">Res_mantissa_temp[53:0]</obj_property>
       <obj_property name="ObjectShortName">Res_mantissa_temp[53:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/adder_gen_v0_test/adder_DUT/mantissa_alu/Res_mantissa" type="array">
-      <obj_property name="ElementShortName">Res_mantissa[53:0]</obj_property>
-      <obj_property name="ObjectShortName">Res_mantissa[53:0]</obj_property>
-   </wvobject>
    <wvobject fp_name="/adder_gen_v0_test/adder_DUT/mantissa_alu/A_mantissa_pretended" type="array">
       <obj_property name="ElementShortName">A_mantissa_pretended[52:0]</obj_property>
       <obj_property name="ObjectShortName">A_mantissa_pretended[52:0]</obj_property>
    </wvobject>
+   <wvobject fp_name="/adder_gen_v0_test/adder_DUT/mantissa_alu/B_mantissa_complemented" type="array">
+      <obj_property name="ElementShortName">B_mantissa_complemented[52:0]</obj_property>
+      <obj_property name="ObjectShortName">B_mantissa_complemented[52:0]</obj_property>
+   </wvobject>
    <wvobject fp_name="/adder_gen_v0_test/adder_DUT/mantissa_alu/B_mantissa_pretended" type="array">
       <obj_property name="ElementShortName">B_mantissa_pretended[52:0]</obj_property>
       <obj_property name="ObjectShortName">B_mantissa_pretended[52:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/adder_gen_v0_test/adder_DUT/mantissa_alu/Res_mantissa" type="array">
+      <obj_property name="ElementShortName">Res_mantissa[53:0]</obj_property>
+      <obj_property name="ObjectShortName">Res_mantissa[53:0]</obj_property>
    </wvobject>
    <wvobject fp_name="/adder_gen_v0_test/adder_DUT/lzd/mantissa" type="array">
       <obj_property name="ElementShortName">mantissa[53:0]</obj_property>
@@ -87,8 +91,8 @@
       <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/adder_gen_v0_test/adder_DUT/barrel_shifter_normalize/A" type="array">
-      <obj_property name="ElementShortName">A[53:0]</obj_property>
-      <obj_property name="ObjectShortName">A[53:0]</obj_property>
+      <obj_property name="ElementShortName">A[51:0]</obj_property>
+      <obj_property name="ObjectShortName">A[51:0]</obj_property>
    </wvobject>
    <wvobject fp_name="/adder_gen_v0_test/adder_DUT/barrel_shifter_normalize/shift" type="array">
       <obj_property name="ElementShortName">shift[7:0]</obj_property>
@@ -143,6 +147,10 @@
       <obj_property name="ObjectShortName">B_mantissa_pretended[52:0]</obj_property>
    </wvobject>
    <wvobject fp_name="/adder_gen_v0_test/adder_DUT/Res_mantissa" type="array">
+      <obj_property name="ElementShortName">Res_mantissa[53:0]</obj_property>
+      <obj_property name="ObjectShortName">Res_mantissa[53:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/adder_gen_v0_test/adder_DUT/mantissa_alu/Res_mantissa" type="array">
       <obj_property name="ElementShortName">Res_mantissa[53:0]</obj_property>
       <obj_property name="ObjectShortName">Res_mantissa[53:0]</obj_property>
    </wvobject>
