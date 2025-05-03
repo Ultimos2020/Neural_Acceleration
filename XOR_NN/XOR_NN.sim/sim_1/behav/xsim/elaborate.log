@@ -6,15 +6,4 @@ Using 2 slave threads.
 Starting static elaboration
 Pass Through NonSizing Optimizer
 Completed static elaboration
-Starting simulation data flow analysis
-Completed simulation data flow analysis
-Time Resolution for simulation is 1ps
-Compiling module xil_defaultlib.expo_alu_gen_v0
-Compiling module xil_defaultlib.barrel_shifter_gen_v0_default
-Compiling module xil_defaultlib.mantissa_alu_gen_vo
-Compiling module xil_defaultlib.leading_zero_detector_gen_v0
-Compiling module xil_defaultlib.barrel_shifter_gen_v0(n=52,shift...
-Compiling module xil_defaultlib.double_precision_floating_adder_...
-Compiling module xil_defaultlib.adder_gen_v0_test
-Compiling module xil_defaultlib.glbl
-Built simulation snapshot adder_gen_v0_test_behav
+INFO: [XSIM 43-4323] No Change in HDL. Linking previously generated obj files to create kernel
