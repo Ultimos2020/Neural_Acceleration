@@ -3,155 +3,70 @@
    <wave_state>
    </wave_state>
    <db_ref_list>
-      <db_ref path="adder_gen_v0_test_behav.wdb" id="1">
+      <db_ref path="add_gen_v0_test_v1_behav.wdb" id="1">
          <top_modules>
-            <top_module name="adder_gen_v0_test" />
+            <top_module name="add_gen_v0_test_v1" />
             <top_module name="glbl" />
          </top_modules>
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="5.000 ns"></ZoomStartTime>
-      <ZoomEndTime time="35.001 ns"></ZoomEndTime>
-      <Cursor1Time time="12.691 ns"></Cursor1Time>
+      <ZoomStartTime time="0.000 ns"></ZoomStartTime>
+      <ZoomEndTime time="108.001 ns"></ZoomEndTime>
+      <Cursor1Time time="89.128 ns"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="276"></NameColumnWidth>
-      <ValueColumnWidth column_width="107"></ValueColumnWidth>
+      <NameColumnWidth column_width="147"></NameColumnWidth>
+      <ValueColumnWidth column_width="59"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="33" />
-   <wvobject fp_name="/adder_gen_v0_test/A" type="array">
+   <WVObjectSize size="7" />
+   <wvobject fp_name="/add_gen_v0_test_v1/A" type="array">
       <obj_property name="ElementShortName">A[63:0]</obj_property>
       <obj_property name="ObjectShortName">A[63:0]</obj_property>
+      <obj_property name="Radix">REALRADIX</obj_property>
+      <obj_property name="radix_realType">FLOATINGPOINTRADIX</obj_property>
+      <obj_property name="radix_fractionWidth">53</obj_property>
+      <obj_property name="radix_otherWidth">11</obj_property>
    </wvobject>
-   <wvobject fp_name="/adder_gen_v0_test/B" type="array">
+   <wvobject fp_name="/add_gen_v0_test_v1/B" type="array">
       <obj_property name="ElementShortName">B[63:0]</obj_property>
       <obj_property name="ObjectShortName">B[63:0]</obj_property>
+      <obj_property name="Radix">REALRADIX</obj_property>
+      <obj_property name="radix_realType">FLOATINGPOINTRADIX</obj_property>
+      <obj_property name="radix_fractionWidth">53</obj_property>
+      <obj_property name="radix_otherWidth">11</obj_property>
    </wvobject>
-   <wvobject fp_name="/adder_gen_v0_test/operation" type="array">
+   <wvobject fp_name="/add_gen_v0_test_v1/operation" type="array">
       <obj_property name="ElementShortName">operation[2:0]</obj_property>
       <obj_property name="ObjectShortName">operation[2:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/adder_gen_v0_test/Res" type="array">
+   <wvobject fp_name="/add_gen_v0_test_v1/Res" type="array">
       <obj_property name="ElementShortName">Res[63:0]</obj_property>
       <obj_property name="ObjectShortName">Res[63:0]</obj_property>
+      <obj_property name="Radix">REALRADIX</obj_property>
+      <obj_property name="radix_realType">FLOATINGPOINTRADIX</obj_property>
+      <obj_property name="radix_fractionWidth">53</obj_property>
+      <obj_property name="radix_otherWidth">11</obj_property>
    </wvobject>
-   <wvobject fp_name="/adder_gen_v0_test/adder_DUT/mantissa_alu/Res_mantissa_temp" type="array">
-      <obj_property name="ElementShortName">Res_mantissa_temp[53:0]</obj_property>
-      <obj_property name="ObjectShortName">Res_mantissa_temp[53:0]</obj_property>
+   <wvobject fp_name="/add_gen_v0_test_v1/adder_DUT/Res" type="array">
+      <obj_property name="ElementShortName">Res[63:0]</obj_property>
+      <obj_property name="ObjectShortName">Res[63:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+      <obj_property name="radix_realType">FLOATINGPOINTRADIX</obj_property>
+      <obj_property name="radix_fractionWidth">53</obj_property>
+      <obj_property name="radix_otherWidth">11</obj_property>
    </wvobject>
-   <wvobject fp_name="/adder_gen_v0_test/adder_DUT/mantissa_alu/A_mantissa_pretended" type="array">
-      <obj_property name="ElementShortName">A_mantissa_pretended[52:0]</obj_property>
-      <obj_property name="ObjectShortName">A_mantissa_pretended[52:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/adder_gen_v0_test/adder_DUT/mantissa_alu/B_mantissa_complemented" type="array">
-      <obj_property name="ElementShortName">B_mantissa_complemented[52:0]</obj_property>
-      <obj_property name="ObjectShortName">B_mantissa_complemented[52:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/adder_gen_v0_test/adder_DUT/mantissa_alu/B_mantissa_pretended" type="array">
-      <obj_property name="ElementShortName">B_mantissa_pretended[52:0]</obj_property>
-      <obj_property name="ObjectShortName">B_mantissa_pretended[52:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/adder_gen_v0_test/adder_DUT/mantissa_alu/Res_mantissa" type="array">
-      <obj_property name="ElementShortName">Res_mantissa[53:0]</obj_property>
-      <obj_property name="ObjectShortName">Res_mantissa[53:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/adder_gen_v0_test/adder_DUT/lzd/mantissa" type="array">
-      <obj_property name="ElementShortName">mantissa[53:0]</obj_property>
-      <obj_property name="ObjectShortName">mantissa[53:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/adder_gen_v0_test/adder_DUT/lzd/shift" type="array">
-      <obj_property name="ElementShortName">shift[7:0]</obj_property>
-      <obj_property name="ObjectShortName">shift[7:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/adder_gen_v0_test/adder_DUT/lzd/group_0" type="logic">
-      <obj_property name="ElementShortName">group_0</obj_property>
-      <obj_property name="ObjectShortName">group_0</obj_property>
-   </wvobject>
-   <wvobject fp_name="/adder_gen_v0_test/adder_DUT/lzd/group_6" type="logic">
-      <obj_property name="ElementShortName">group_6</obj_property>
-      <obj_property name="ObjectShortName">group_6</obj_property>
-   </wvobject>
-   <wvobject fp_name="/adder_gen_v0_test/adder_DUT/lzd/group_sel" type="array">
-      <obj_property name="ElementShortName">group_sel[7:0]</obj_property>
-      <obj_property name="ObjectShortName">group_sel[7:0]</obj_property>
-      <obj_property name="Radix">BINARYRADIX</obj_property>
-   </wvobject>
-   <wvobject fp_name="/adder_gen_v0_test/adder_DUT/lzd/group_val" type="array">
-      <obj_property name="ElementShortName">group_val[2:0]</obj_property>
-      <obj_property name="ObjectShortName">group_val[2:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/adder_gen_v0_test/adder_DUT/lzd/group_intra_val" type="array">
-      <obj_property name="ElementShortName">group_intra_val[2:0]</obj_property>
-      <obj_property name="ObjectShortName">group_intra_val[2:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/adder_gen_v0_test/adder_DUT/lzd/leading_1" type="array">
-      <obj_property name="ElementShortName">leading_1[6:0]</obj_property>
-      <obj_property name="ObjectShortName">leading_1[6:0]</obj_property>
+   <wvobject fp_name="/add_gen_v0_test_v1/errors" type="array">
+      <obj_property name="ElementShortName">errors[31:0]</obj_property>
+      <obj_property name="ObjectShortName">errors[31:0]</obj_property>
+      <obj_property name="CustomSignalColor">#FF0000</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
       <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
    </wvobject>
-   <wvobject fp_name="/adder_gen_v0_test/adder_DUT/barrel_shifter_normalize/A" type="array">
-      <obj_property name="ElementShortName">A[51:0]</obj_property>
-      <obj_property name="ObjectShortName">A[51:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/adder_gen_v0_test/adder_DUT/barrel_shifter_normalize/shift" type="array">
-      <obj_property name="ElementShortName">shift[7:0]</obj_property>
-      <obj_property name="ObjectShortName">shift[7:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/adder_gen_v0_test/adder_DUT/A_exponent" type="array">
-      <obj_property name="ElementShortName">A_exponent[10:0]</obj_property>
-      <obj_property name="ObjectShortName">A_exponent[10:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/adder_gen_v0_test/adder_DUT/B_exponent" type="array">
-      <obj_property name="ElementShortName">B_exponent[10:0]</obj_property>
-      <obj_property name="ObjectShortName">B_exponent[10:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/adder_gen_v0_test/adder_DUT/A_mantissa" type="array">
-      <obj_property name="ElementShortName">A_mantissa[51:0]</obj_property>
-      <obj_property name="ObjectShortName">A_mantissa[51:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/adder_gen_v0_test/adder_DUT/B_mantissa" type="array">
-      <obj_property name="ElementShortName">B_mantissa[51:0]</obj_property>
-      <obj_property name="ObjectShortName">B_mantissa[51:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/adder_gen_v0_test/adder_DUT/A_sign" type="logic">
-      <obj_property name="ElementShortName">A_sign</obj_property>
-      <obj_property name="ObjectShortName">A_sign</obj_property>
-   </wvobject>
-   <wvobject fp_name="/adder_gen_v0_test/adder_DUT/B_sign" type="logic">
-      <obj_property name="ElementShortName">B_sign</obj_property>
-      <obj_property name="ObjectShortName">B_sign</obj_property>
-   </wvobject>
-   <wvobject fp_name="/adder_gen_v0_test/adder_DUT/exponent_alu/select" type="logic">
-      <obj_property name="ElementShortName">select</obj_property>
-      <obj_property name="ObjectShortName">select</obj_property>
-   </wvobject>
-   <wvobject fp_name="/adder_gen_v0_test/adder_DUT/exponent_alu/Diff" type="array">
-      <obj_property name="ElementShortName">Diff[10:0]</obj_property>
-      <obj_property name="ObjectShortName">Diff[10:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/adder_gen_v0_test/adder_DUT/out_mantissa_pretended_shifted" type="array">
-      <obj_property name="ElementShortName">out_mantissa_pretended_shifted[52:0]</obj_property>
-      <obj_property name="ObjectShortName">out_mantissa_pretended_shifted[52:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/adder_gen_v0_test/adder_DUT/Res_sign" type="logic">
-      <obj_property name="ElementShortName">Res_sign</obj_property>
-      <obj_property name="ObjectShortName">Res_sign</obj_property>
-   </wvobject>
-   <wvobject fp_name="/adder_gen_v0_test/adder_DUT/mantissa_alu/A_mantissa_pretended" type="array">
-      <obj_property name="ElementShortName">A_mantissa_pretended[52:0]</obj_property>
-      <obj_property name="ObjectShortName">A_mantissa_pretended[52:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/adder_gen_v0_test/adder_DUT/mantissa_alu/B_mantissa_pretended" type="array">
-      <obj_property name="ElementShortName">B_mantissa_pretended[52:0]</obj_property>
-      <obj_property name="ObjectShortName">B_mantissa_pretended[52:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/adder_gen_v0_test/adder_DUT/Res_mantissa" type="array">
-      <obj_property name="ElementShortName">Res_mantissa[53:0]</obj_property>
-      <obj_property name="ObjectShortName">Res_mantissa[53:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/adder_gen_v0_test/adder_DUT/mantissa_alu/Res_mantissa" type="array">
-      <obj_property name="ElementShortName">Res_mantissa[53:0]</obj_property>
-      <obj_property name="ObjectShortName">Res_mantissa[53:0]</obj_property>
+   <wvobject fp_name="/add_gen_v0_test_v1/mismatch" type="logic">
+      <obj_property name="ElementShortName">mismatch</obj_property>
+      <obj_property name="ObjectShortName">mismatch</obj_property>
+      <obj_property name="CustomSignalColor">#FF0000</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
    </wvobject>
 </wave_config>

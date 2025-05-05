@@ -73,11 +73,14 @@ barrel_shifter_gen_v0 #(.n(53), .direction(1)) barrel_shifter_align (
 // Note this ALU is for mantissa addition/subtraction.
 
 logic [52:0] A_mantissa_in_alu, B_mantissa_in_alu;
+logic A_sign_in_alu, B_sign_in_alu;
 logic [53:0] Res_mantissa;
 logic Res_sign;
 
-assign A_mantissa_in_alu = select ? out_mantissa_pretended_shifted : A_mantissa_pretended; 
-assign B_mantissa_in_alu = select ? B_mantissa_pretended : out_mantissa_pretended_shifted;
+assign A_sign_in_alu = !select ? A_sign : B_sign; // Select the sign based on the exponent difference
+assign B_sign_in_alu = select ? A_sign : B_sign; // Select the sign based on the exponent difference
+assign A_mantissa_in_alu = select ? B_mantissa_pretended : A_mantissa_pretended; 
+assign B_mantissa_in_alu = out_mantissa_pretended_shifted;
 
 mantissa_alu_gen_vo mantissa_alu (
     .A_mantissa_pretended(A_mantissa_in_alu),

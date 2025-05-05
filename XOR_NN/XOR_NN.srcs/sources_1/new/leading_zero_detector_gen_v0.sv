@@ -65,7 +65,7 @@ always_comb begin : Inter_group_sel
         group_val = 3'b000;
     end else begin
         group_sel = 7'b0000000; // all zeros
-        group_val = 3'b111; // all zeros
+        group_val = 3'b000; // all zeros
     end
     
 end
@@ -93,6 +93,6 @@ always_comb begin : Intra_group_sel
 end
 
 assign leading_1 = {4'b0000, group_intra_val} + {1'b0,group_val, 3'b000};
-assign shift = 7'd52 - leading_1;
+assign shift = |leading_1 ? 7'd52 - leading_1 : 8'd0;
 
 endmodule
