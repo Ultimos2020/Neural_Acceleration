@@ -23,7 +23,8 @@
 
 module leading_zero_detector_gen_v0(
     input [53:0] mantissa,
-    output [7:0] shift
+    output [7:0] shift,
+    output direction
     );
 
 logic group_0, group_1, group_2, group_3, group_4, group_5, group_6;
@@ -65,7 +66,7 @@ always_comb begin : Inter_group_sel
         group_val = 3'b000;
     end else begin
         group_sel = 7'b0000000; // all zeros
-        group_val = 3'b111; // all zeros
+        group_val = 3'b000; // all zeros
     end
     
 end
@@ -93,6 +94,7 @@ always_comb begin : Intra_group_sel
 end
 
 assign leading_1 = {4'b0000, group_intra_val} + {1'b0,group_val, 3'b000};
-assign shift = 7'd52 - leading_1;
+assign shift = |leading_1 ? 7'd52 - leading_1 : 8'd0;
+assign direction = leading_1 == 7'd53 ? 1'b1 : 1'b0; // 1 for left shift, 0 for right shift
 
 endmodule

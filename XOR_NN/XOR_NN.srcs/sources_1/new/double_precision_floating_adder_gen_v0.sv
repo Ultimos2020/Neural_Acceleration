@@ -49,8 +49,8 @@ logic select; // select = 1 if A is smaller than B
 logic [10:0] Diff_exponent; // Difference of exponent needed for barrel shifter   
 
 expo_alu_gen_v0 exponent_alu (
-    .A(A_exponent),
-    .B(B_exponent),
+    .A(A),
+    .B(B),
     .select(select),
     .Diff(Diff_exponent)
 );
@@ -73,11 +73,14 @@ barrel_shifter_gen_v0 #(.n(53), .direction(1)) barrel_shifter_align (
 // Note this ALU is for mantissa addition/subtraction.
 
 logic [52:0] A_mantissa_in_alu, B_mantissa_in_alu;
+logic A_sign_in_alu, B_sign_in_alu;
 logic [53:0] Res_mantissa;
 logic Res_sign;
 
-assign A_mantissa_in_alu = select ? out_mantissa_pretended_shifted : A_mantissa_pretended; 
-assign B_mantissa_in_alu = select ? B_mantissa_pretended : out_mantissa_pretended_shifted;
+assign A_sign_in_alu = !select ? A_sign : B_sign; // Select the sign based on the exponent difference
+assign B_sign_in_alu = select ? A_sign : B_sign; // Select the sign based on the exponent difference
+assign A_mantissa_in_alu = select ? B_mantissa_pretended : A_mantissa_pretended; 
+assign B_mantissa_in_alu = out_mantissa_pretended_shifted;
 
 mantissa_alu_gen_vo mantissa_alu (
     .A_mantissa_pretended(A_mantissa_in_alu),
@@ -95,10 +98,11 @@ mantissa_alu_gen_vo mantissa_alu (
 // This is to normalize the result mantissa.
 
 logic [7:0] leading_zeros; // Leading zeros of the result mantissa
-
+logic direction_norm; // Direction of the shift (1 for left, 0 for right)
 leading_zero_detector_gen_v0 lzd (
   .mantissa(Res_mantissa),
-  .shift(leading_zeros)
+  .shift(leading_zeros),
+  .direction(direction_norm)
 );
 
 //Configuring Barrel Shifter to shift the mantissa of the result based on the leading zeros
@@ -111,12 +115,12 @@ barrel_shifter_gen_v0 #(.n(52), .shift_max(8), .direction(0)) barrel_shifter_nor
 );
 logic [51:0] Res_mantissa_right_shifted;
 
-assign Res_mantissa_right_shifted = Res_mantissa << 1;
+assign Res_mantissa_right_shifted = Res_mantissa[52:1];
 
 
 logic [10:0] Res_expo_test;
-assign Res[51:0] = Res_mantissa[53] ?  Res_mantissa_right_shifted : Res_temp; // Shift left if the result mantissa is negative
-assign Res[62:52] = select ? (B_exponent - leading_zeros) : (A_exponent - leading_zeros); // Adjust the exponent based on the leading zeros
+assign Res[51:0] =  direction_norm ?  Res_mantissa_right_shifted[51:0] : Res_temp; // Shift left if the result mantissa is negative
+assign Res[62:52] = !direction_norm ? (select ? (B_exponent - leading_zeros) : (A_exponent - leading_zeros)) : (select ? (B_exponent + 1'b1) : (A_exponent + 1'b1)); // Adjust the exponent based on the leading zeros
 assign Res[63] = Res_sign; // Set the sign bit based on the result sign
 assign Res_expo_test = select ? (B_exponent - leading_zeros + 1'b1) : (A_exponent - leading_zeros + 1'b1); // Adjust the exponent based on the leading zeros
 

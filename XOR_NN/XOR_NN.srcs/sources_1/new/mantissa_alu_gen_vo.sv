@@ -32,7 +32,7 @@ module mantissa_alu_gen_vo(
     output logic Res_sign,
     output logic [53:0] Res_mantissa
     );
-
+//By select logic outside the ALU, 
 logic [52:0] A_mantissa_complemented;
 logic [52:0] B_mantissa_complemented;
 logic [53:0] Res_mantissa_temp;
@@ -41,7 +41,16 @@ assign A_mantissa_complemented = ~A_mantissa_pretended + 1'b1; // 2's complement
 assign B_mantissa_complemented = ~B_mantissa_pretended + 1'b1; // 2's complement
 always_comb begin
     if (operation == 3'b001) begin // A + B
-        case ({A_sign, B_sign})
+        if (A_sign == B_sign) begin
+            Res_mantissa_temp = A_mantissa_pretended + B_mantissa_pretended;
+            Res_mantissa = Res_mantissa_temp;
+            Res_sign = A_sign; // Same sign for both
+        end else begin
+            Res_mantissa_temp = A_mantissa_pretended + B_mantissa_complemented;
+            Res_mantissa = {1'b0,Res_mantissa_temp[52:0]};
+            Res_sign = select ? ~A_sign : A_sign; // Result sign depends on the larger magnitude
+        end
+        /*case ({A_sign, B_sign})
         2'b00: begin // A + B
             Res_mantissa_temp = A_mantissa_pretended + B_mantissa_pretended;
             Res_mantissa = Res_mantissa_temp;
@@ -67,9 +76,18 @@ always_comb begin
             Res_mantissa = 54'b0; // Invalid operation
             Res_sign = 1'b0;
         end
-        endcase
+        endcase*/
     end else if (operation == 3'b010) begin // A - B
-        case ({A_sign, B_sign})
+        if (A_sign == B_sign) begin
+            Res_mantissa_temp = A_mantissa_pretended + B_mantissa_complemented;
+            Res_mantissa = {1'b0,Res_mantissa_temp[52:0]};
+            Res_sign = select ? ~A_sign : A_sign; // Result sign depends on the larger magnitude
+        end else begin
+            Res_mantissa_temp = A_mantissa_pretended + B_mantissa_pretended;
+            Res_mantissa = Res_mantissa_temp;
+            Res_sign = A_sign; // Same sign for both
+        end
+        /*case ({A_sign, B_sign})
         2'b00: begin // A - B
             Res_mantissa_temp = A_mantissa_pretended + B_mantissa_complemented;
             Res_mantissa = select ? ~Res_mantissa_temp + 1'b1 : Res_mantissa_temp;
@@ -100,9 +118,9 @@ always_comb begin
         Res_mantissa = 54'b0; // Invalid operation
         Res_sign = 1'b0; // Invalid operation
         Res_mantissa_temp = 54'b0; // Invalid operation
-    end
+    end*/
 end
-
+end
 
 
 endmodule
