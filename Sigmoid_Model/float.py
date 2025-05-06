@@ -10,8 +10,8 @@ def double_to_hex(f: float) -> str:
     return hex(struct.unpack('>Q', struct.pack('>d', f))[0])
 
 # Example values (1.0 + 2.0)
-h1 = "0x3FF0000000000000"  # 1.0
-h2 = "0x4000000000000000"  # 2.0
+h1 = "0x0340_0000_0000_0001"  # 1.0
+h2 = "0x7FEFFFFFFFFFFFFF"  # 2.0
 
 f1 = hex_to_double(h1)
 f2 = hex_to_double(h2)
