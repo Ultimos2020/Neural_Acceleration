@@ -132,13 +132,20 @@ exception_handle exception_handle (
 );
 
 
-logic [10:0] Res_expo_test;
-logic en;
+logic [10:0] Res_expo_test, Res_expo_temp;
+logic [51:0] Res_mantissa_temp, Res_mantissa_temp_for_denorm;
+logic en, detect_2047, detect_denorm;
+
+assign detect_denorm = select ? (B_exponent < leading_zeros) : (A_exponent < leading_zeros);
 assign en = |leading_zeros[7:0] || |Res_mantissa;
 assign Res_expo_test = { 11{en} };
-assign Res[51:0] =  direction_norm ?  Res_mantissa_right_shifted[51:0] : Res_temp; // Shift left if the result mantissa is negative
-assign Res[62:52] = !direction_norm ? Res_expo_test & (select ? (B_exponent - leading_zeros) : (A_exponent - leading_zeros)) : (select ? (B_exponent + 1'b1) : (A_exponent + 1'b1)); // Adjust the exponent based on the leading zeros
+assign Res[62:52] = ~detect_denorm ? Res_expo_temp : 11'd0;
+assign Res[51:0] = ~detect_denorm ? Res_mantissa_temp_for_denorm : Res_mantissa[51:0]; // Set the mantissa to 0 if the exponent is 2047 (infinity or NaN)
+assign Res_mantissa_temp =  direction_norm ?  Res_mantissa_right_shifted[51:0] : Res_temp; // Shift left if the result mantissa is negative
+assign Res_expo_temp = !direction_norm ? Res_expo_test & (select ? (B_exponent - leading_zeros) : (A_exponent - leading_zeros)) : (select ? (B_exponent + 1'b1) : (A_exponent + 1'b1)); // Adjust the exponent based on the leading zeros
 assign Res[63] = |Res [62:0] ? Res_sign : 1'b0 ; // Set the sign bit based on the result sign
+assign detect_2047 = (Res[62:52] == 11'd2047) ? 1'b1 : 1'b0; // Detect if the exponent is 2047 (infinity or NaN)
+assign Res_mantissa_temp_for_denorm = ~detect_2047 || (detect_2047 & (|inf[1:0] | |NaN[1:0])) ? Res_mantissa_temp : 52'd0; // Set the mantissa to 0 if the exponent is 2047 (infinity or NaN)
 //assign Res_expo_test = select ? (B_exponent - leading_zeros + 1'b1) : (A_exponent - leading_zeros + 1'b1); // Adjust the exponent based on the leading zeros
 
 

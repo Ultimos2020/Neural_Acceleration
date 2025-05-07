@@ -11,12 +11,12 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="46.000 ns"></ZoomStartTime>
-      <ZoomEndTime time="177.504 ns"></ZoomEndTime>
-      <Cursor1Time time="150.557 ns"></Cursor1Time>
+      <ZoomStartTime time="28.000 ns"></ZoomStartTime>
+      <ZoomEndTime time="196.001 ns"></ZoomEndTime>
+      <Cursor1Time time="159.095 ns"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="140"></NameColumnWidth>
+      <NameColumnWidth column_width="136"></NameColumnWidth>
       <ValueColumnWidth column_width="58"></ValueColumnWidth>
    </column_width_setting>
    <WVObjectSize size="17" />
@@ -98,6 +98,7 @@
    <wvobject fp_name="/add_gen_v0_test_v1/adder_DUT/lzd/shift" type="array">
       <obj_property name="ElementShortName">shift[7:0]</obj_property>
       <obj_property name="ObjectShortName">shift[7:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/add_gen_v0_test_v1/adder_DUT/lzd/leading_1" type="array">
       <obj_property name="ElementShortName">leading_1[6:0]</obj_property>

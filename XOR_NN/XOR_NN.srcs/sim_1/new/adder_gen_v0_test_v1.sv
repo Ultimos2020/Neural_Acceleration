@@ -184,7 +184,13 @@ module add_gen_v0_test_v1();
              64'h7FEFFFFFFFFFFFFF,
              3'b010,
              64'hFFF0000000000000,
-             "max+max");                             
+             "max+max");
+
+    run_case(64'h0010000000000001,
+             64'h0010000000000000,
+             3'b010,
+             64'h0000000000000001,
+             "to get smallest value");                            
 
     // Summary
     if (errors) begin
