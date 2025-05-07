@@ -117,12 +117,29 @@ logic [51:0] Res_mantissa_right_shifted;
 
 assign Res_mantissa_right_shifted = Res_mantissa[52:1];
 
+logic [2:0] exception_detect; // Exception detection signal
+logic [2:0] inf, zero, denorm, NaN; // Exception signals
+
+exception_handle exception_handle (
+    .A(A),
+    .B(B),
+    .Res(Res),
+    .inf(inf),
+    .zero(zero),
+    .denorm(denorm),
+    .NaN(NaN),
+    .exception_detect(exception_detect)
+);
+
 
 logic [10:0] Res_expo_test;
+logic en;
+assign en = |leading_zeros[7:0] || |Res_mantissa;
+assign Res_expo_test = { 11{en} };
 assign Res[51:0] =  direction_norm ?  Res_mantissa_right_shifted[51:0] : Res_temp; // Shift left if the result mantissa is negative
-assign Res[62:52] = !direction_norm ? (select ? (B_exponent - leading_zeros) : (A_exponent - leading_zeros)) : (select ? (B_exponent + 1'b1) : (A_exponent + 1'b1)); // Adjust the exponent based on the leading zeros
-assign Res[63] = Res_sign; // Set the sign bit based on the result sign
-assign Res_expo_test = select ? (B_exponent - leading_zeros + 1'b1) : (A_exponent - leading_zeros + 1'b1); // Adjust the exponent based on the leading zeros
+assign Res[62:52] = !direction_norm ? Res_expo_test & (select ? (B_exponent - leading_zeros) : (A_exponent - leading_zeros)) : (select ? (B_exponent + 1'b1) : (A_exponent + 1'b1)); // Adjust the exponent based on the leading zeros
+assign Res[63] = |Res [62:0] ? Res_sign : 1'b0 ; // Set the sign bit based on the result sign
+//assign Res_expo_test = select ? (B_exponent - leading_zeros + 1'b1) : (A_exponent - leading_zeros + 1'b1); // Adjust the exponent based on the leading zeros
 
 
 endmodule

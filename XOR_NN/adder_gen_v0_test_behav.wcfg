@@ -11,15 +11,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="0.000 ns"></ZoomStartTime>
-      <ZoomEndTime time="108.001 ns"></ZoomEndTime>
-      <Cursor1Time time="89.128 ns"></Cursor1Time>
+      <ZoomStartTime time="46.000 ns"></ZoomStartTime>
+      <ZoomEndTime time="177.504 ns"></ZoomEndTime>
+      <Cursor1Time time="150.557 ns"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="147"></NameColumnWidth>
-      <ValueColumnWidth column_width="59"></ValueColumnWidth>
+      <NameColumnWidth column_width="140"></NameColumnWidth>
+      <ValueColumnWidth column_width="58"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="7" />
+   <WVObjectSize size="17" />
    <wvobject fp_name="/add_gen_v0_test_v1/A" type="array">
       <obj_property name="ElementShortName">A[63:0]</obj_property>
       <obj_property name="ObjectShortName">A[63:0]</obj_property>
@@ -68,5 +68,47 @@
       <obj_property name="ObjectShortName">mismatch</obj_property>
       <obj_property name="CustomSignalColor">#FF0000</obj_property>
       <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject fp_name="/add_gen_v0_test_v1/adder_DUT/exception_handle/inf" type="array">
+      <obj_property name="ElementShortName">inf[2:0]</obj_property>
+      <obj_property name="ObjectShortName">inf[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/add_gen_v0_test_v1/adder_DUT/exception_handle/zero" type="array">
+      <obj_property name="ElementShortName">zero[2:0]</obj_property>
+      <obj_property name="ObjectShortName">zero[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/add_gen_v0_test_v1/adder_DUT/exception_handle/denorm" type="array">
+      <obj_property name="ElementShortName">denorm[2:0]</obj_property>
+      <obj_property name="ObjectShortName">denorm[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/add_gen_v0_test_v1/adder_DUT/exception_handle/NaN" type="array">
+      <obj_property name="ElementShortName">NaN[2:0]</obj_property>
+      <obj_property name="ObjectShortName">NaN[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/add_gen_v0_test_v1/adder_DUT/exception_handle/exception_detect" type="array">
+      <obj_property name="ElementShortName">exception_detect[2:0]</obj_property>
+      <obj_property name="ObjectShortName">exception_detect[2:0]</obj_property>
+      <obj_property name="CustomSignalColor">#FFFF00</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject fp_name="/add_gen_v0_test_v1/adder_DUT/lzd/leading_1" type="array">
+      <obj_property name="ElementShortName">leading_1[6:0]</obj_property>
+      <obj_property name="ObjectShortName">leading_1[6:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/add_gen_v0_test_v1/adder_DUT/lzd/shift" type="array">
+      <obj_property name="ElementShortName">shift[7:0]</obj_property>
+      <obj_property name="ObjectShortName">shift[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/add_gen_v0_test_v1/adder_DUT/lzd/leading_1" type="array">
+      <obj_property name="ElementShortName">leading_1[6:0]</obj_property>
+      <obj_property name="ObjectShortName">leading_1[6:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/add_gen_v0_test_v1/adder_DUT/en" type="logic">
+      <obj_property name="ElementShortName">en</obj_property>
+      <obj_property name="ObjectShortName">en</obj_property>
+   </wvobject>
+   <wvobject fp_name="/add_gen_v0_test_v1/adder_DUT/mantissa_alu/Res_mantissa" type="array">
+      <obj_property name="ElementShortName">Res_mantissa[53:0]</obj_property>
+      <obj_property name="ObjectShortName">Res_mantissa[53:0]</obj_property>
    </wvobject>
 </wave_config>

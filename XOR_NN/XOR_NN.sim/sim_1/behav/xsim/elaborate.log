@@ -14,6 +14,7 @@ Compiling module xil_defaultlib.barrel_shifter_gen_v0_default
 Compiling module xil_defaultlib.mantissa_alu_gen_vo
 Compiling module xil_defaultlib.leading_zero_detector_gen_v0
 Compiling module xil_defaultlib.barrel_shifter_gen_v0(n=52,shift...
+Compiling module xil_defaultlib.exception_handle
 Compiling module xil_defaultlib.double_precision_floating_adder_...
 Compiling module xil_defaultlib.add_gen_v0_test_v1
 Compiling module xil_defaultlib.glbl

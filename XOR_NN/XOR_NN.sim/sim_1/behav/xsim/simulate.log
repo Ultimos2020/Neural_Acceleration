@@ -8,6 +8,14 @@ Time resolution is 1 ps
  [-99+100] PASS: A=0xc058c00000000000, B=0x4059000000000000, op=1 → got 0x3ff0000000000000, expected 0x3ff0000000000000
  [-99-100] PASS: A=0xc058c00000000000, B=0x4059000000000000, op=2 → got 0xc068e00000000000, expected 0xc068e00000000000
  [2+10] PASS: A=0x4000000000000000, B=0x4024000000000000, op=1 → got 0x4028000000000000, expected 0x4028000000000000
+ [1-1] PASS: A=0x3ff0000000000000, B=0x3ff0000000000000, op=2 → got 0x0000000000000000, expected 0x0000000000000000
+ [999-999] PASS: A=0x408f380000000000, B=0x408f380000000000, op=2 → got 0x0000000000000000, expected 0x0000000000000000
+ [max+max] ERROR: A=0x7fefffffffffffff, B=0x7fefffffffffffff, op=1 → got 0x7fffffffffffffff, expected 0x7ff0000000000000
+ [max+max] ERROR: Mantissa mismatch
+ [max+max] ERROR: A=0xffefffffffffffff, B=0x7fefffffffffffff, op=2 → got 0xffffffffffffffff, expected 0xfff0000000000000
+ [max+max] ERROR: Mantissa mismatch
 
-*** ALL TESTS PASSED ***
-$finish called at time : 108 ns : File "C:/Users/ratne/Desktop/Neural_Acceleration/XOR_NN/XOR_NN.srcs/sim_1/new/adder_gen_v0_test_v1.sv" Line 159
+*** TEST FAILED: 2 ERROR(S) ***
+Fatal: 
+Time: 156 ns  Iteration: 0  Process: /add_gen_v0_test_v1/Initial92_5  Scope: add_gen_v0_test_v1  File: C:/Users/ratne/Desktop/Neural_Acceleration/XOR_NN/XOR_NN.srcs/sim_1/new/adder_gen_v0_test_v1.sv Line: 192
+$finish called at time : 156 ns
