@@ -31,10 +31,24 @@ logic [n-1:0] S [n-1:0]; // Sum
 logic [n-1:0] C [n-1:1]; // Carry
 logic check;
 
-assign S[0] = A & {n{B[0]}};
+assign S[0][n-1:0] = A & {n{B[0]}};
 //assign C[0] = {(n){1'b0}};
 //assign P[0] = {n{1'b0}};
 genvar i, j;
+
+//-----------------> i number of stages
+//|
+//|
+//|
+//|
+//|
+//|
+//|
+//|
+//V
+// j size of stage
+
+
 
 generate
     for (i = 1; i < n; i = i + 1) begin : pp_gen
@@ -43,7 +57,7 @@ generate
 
     for (i = 1; i < n; i = i + 1) begin : cs_gen
     if (i == 1) begin
-        for (j = 0; j < n; j = j + 1) begin : fa_gen
+        for (j = 0; j < n; j = j + 1) begin : ha_init
                     HA HA_init(
                         .A(P[i][j]),
                         .B(S[i-1][j]),
@@ -83,11 +97,11 @@ RCA #(n) RCA_final(
 );
 
 //assign Product[n-1:0] = S[n-1:0][1];
-
-always_comb begin : product_assign
-    for (int i = 0; i < n; i = i + 1) begin
-        Product[i] = S[i][0];
+genvar k;
+generate
+    for (k = 0; k < n; k = k + 1) begin : product_assign
+        assign Product[k] = S[k][0];
     end
-end
+endgenerate
 
 endmodule

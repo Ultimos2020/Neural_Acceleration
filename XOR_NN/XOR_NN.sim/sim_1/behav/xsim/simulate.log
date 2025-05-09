@@ -1,0 +1,97 @@
+Time resolution is 1 ps
+A: 0000, B: 0000, Product: 00000000
+A: 0000, B: 0001, Product: 00000000
+A: 0000, B: 0010, Product: 00000000
+A: 0000, B: 0011, Product: 00000000
+A: 0000, B: 0100, Product: 00000000
+A: 0000, B: 0101, Product: 00000000
+A: 0000, B: 0110, Product: 00000000
+A: 0000, B: 0111, Product: 00000000
+A: 0000, B: 1000, Product: 00000000
+A: 0000, B: 1001, Product: 00000000
+A: 0000, B: 1010, Product: 00000000
+A: 0000, B: 1011, Product: 00000000
+A: 0000, B: 1100, Product: 00000000
+A: 0000, B: 1101, Product: 00000000
+A: 0000, B: 1110, Product: 00000000
+A: 0000, B: 1111, Product: 00000000
+A: 0001, B: 0000, Product: 00000000
+Mismatch: A: 0001, B: 0001, Expected: 00000001, Got: 00001111
+Mul failure, expected: 0001, got: 1111
+A: 0001, B: 0001, Product: 00001111
+Mismatch: A: 0001, B: 0010, Expected: 00000010, Got: 00001110
+Mul failure, expected: 0010, got: 1110
+A: 0001, B: 0010, Product: 00001110
+Mismatch: A: 0001, B: 0011, Expected: 00000011, Got: 00001101
+Mul failure, expected: 0011, got: 1101
+A: 0001, B: 0011, Product: 00001101
+Mismatch: A: 0001, B: 0100, Expected: 00000100, Got: 00001100
+Mul failure, expected: 0100, got: 1100
+A: 0001, B: 0100, Product: 00001100
+Mismatch: A: 0001, B: 0101, Expected: 00000101, Got: 00001011
+Mul failure, expected: 0101, got: 1011
+A: 0001, B: 0101, Product: 00001011
+Mismatch: A: 0001, B: 0110, Expected: 00000110, Got: 00001010
+Mul failure, expected: 0110, got: 1010
+A: 0001, B: 0110, Product: 00001010
+Mismatch: A: 0001, B: 0111, Expected: 00000111, Got: 00001001
+Mul failure, expected: 0111, got: 1001
+A: 0001, B: 0111, Product: 00001001
+A: 0001, B: 1000, Product: 00001000
+Mismatch: A: 0001, B: 1001, Expected: 00001001, Got: 00010111
+Mul failure, expected: 1001, got: 0111
+Add failure, expected: 0000, got: 0001
+A: 0001, B: 1001, Product: 00010111
+Mismatch: A: 0001, B: 1010, Expected: 00001010, Got: 00010110
+Mul failure, expected: 1010, got: 0110
+Add failure, expected: 0000, got: 0001
+A: 0001, B: 1010, Product: 00010110
+Mismatch: A: 0001, B: 1011, Expected: 00001011, Got: 00010101
+Mul failure, expected: 1011, got: 0101
+Add failure, expected: 0000, got: 0001
+A: 0001, B: 1011, Product: 00010101
+Mismatch: A: 0001, B: 1100, Expected: 00001100, Got: 00010100
+Mul failure, expected: 1100, got: 0100
+Add failure, expected: 0000, got: 0001
+A: 0001, B: 1100, Product: 00010100
+Mismatch: A: 0001, B: 1101, Expected: 00001101, Got: 00010011
+Mul failure, expected: 1101, got: 0011
+Add failure, expected: 0000, got: 0001
+A: 0001, B: 1101, Product: 00010011
+Mismatch: A: 0001, B: 1110, Expected: 00001110, Got: 00010010
+Mul failure, expected: 1110, got: 0010
+Add failure, expected: 0000, got: 0001
+A: 0001, B: 1110, Product: 00010010
+Mismatch: A: 0001, B: 1111, Expected: 00001111, Got: 00010001
+Mul failure, expected: 1111, got: 0001
+Add failure, expected: 0000, got: 0001
+A: 0001, B: 1111, Product: 00010001
+A: 0010, B: 0000, Product: 00000000
+Mismatch: A: 0010, B: 0001, Expected: 00000010, Got: 00010000
+Mul failure, expected: 0010, got: 0000
+Add failure, expected: 0000, got: 0001
+A: 0010, B: 0001, Product: 00010000
+Mismatch: A: 0010, B: 0010, Expected: 00000100, Got: 00010000
+Mul failure, expected: 0100, got: 0000
+Add failure, expected: 0000, got: 0001
+A: 0010, B: 0010, Product: 00010000
+Mismatch: A: 0010, B: 0011, Expected: 00000110, Got: 00010000
+Mul failure, expected: 0110, got: 0000
+Add failure, expected: 0000, got: 0001
+A: 0010, B: 0011, Product: 00010000
+Mismatch: A: 0010, B: 0100, Expected: 00001000, Got: 00010000
+Mul failure, expected: 1000, got: 0000
+Add failure, expected: 0000, got: 0001
+A: 0010, B: 0100, Product: 00010000
+Mismatch: A: 0010, B: 0101, Expected: 00001010, Got: 00010000
+Mul failure, expected: 1010, got: 0000
+Add failure, expected: 0000, got: 0001
+A: 0010, B: 0101, Product: 00010000
+Mismatch: A: 0010, B: 0110, Expected: 00001100, Got: 00010000
+Mul failure, expected: 1100, got: 0000
+Add failure, expected: 0000, got: 0001
+A: 0010, B: 0110, Product: 00010000
+Mismatch: A: 0010, B: 0111, Expected: 00001110, Got: 00010000
+Mul failure, expected: 1110, got: 0000
+Add failure, expected: 0000, got: 0001
+A

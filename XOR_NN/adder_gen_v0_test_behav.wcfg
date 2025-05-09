@@ -11,15 +11,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="0.000 ns"></ZoomStartTime>
-      <ZoomEndTime time="183.148 ns"></ZoomEndTime>
-      <Cursor1Time time="812.124 ns"></Cursor1Time>
+      <ZoomStartTime time="166.667 ns"></ZoomStartTime>
+      <ZoomEndTime time="885.186 ns"></ZoomEndTime>
+      <Cursor1Time time="320.000 ns"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="132"></NameColumnWidth>
+      <NameColumnWidth column_width="128"></NameColumnWidth>
       <ValueColumnWidth column_width="58"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="4" />
+   <WVObjectSize size="5" />
    <wvobject fp_name="/Carry_Save_Mul_Test/A" type="array">
       <obj_property name="ElementShortName">A[3:0]</obj_property>
       <obj_property name="ObjectShortName">A[3:0]</obj_property>
@@ -35,8 +35,17 @@
       <obj_property name="ObjectShortName">Res[7:0]</obj_property>
       <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
    </wvobject>
+   <wvobject fp_name="/Carry_Save_Mul_Test/expected" type="array">
+      <obj_property name="ElementShortName">expected[7:0]</obj_property>
+      <obj_property name="ObjectShortName">expected[7:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      <obj_property name="CustomSignalColor">#FFD700</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
    <wvobject fp_name="/Carry_Save_Mul_Test/mismatch" type="logic">
       <obj_property name="ElementShortName">mismatch</obj_property>
       <obj_property name="ObjectShortName">mismatch</obj_property>
+      <obj_property name="CustomSignalColor">#FF0000</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
    </wvobject>
 </wave_config>
