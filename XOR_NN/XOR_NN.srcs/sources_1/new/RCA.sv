@@ -24,11 +24,11 @@ module RCA #(parameter n = 4) (
     input [n-2:0] A,
     input [n-2:0] B,
     input Cin,
-    output [n-1:0] Sum,
-    output Cout
+    output logic [n-1:0] Sum
+    //output Cout
     );
 
-logic [n-2:1] C;
+logic [n-1:1] C;
 //assign C[0] = Cin;
 
 genvar i;
@@ -43,12 +43,13 @@ generate
                 .Cout(C[i+1])
             );
         end else if (i == n-1) begin
-            HA HA_final(
-                .A(Cin),
-                .B(C[i-1]),
-                .Sum(Sum[i]),
-                .Cout(Cout)
-            );
+           // HA HA_final(
+             //   .A(Cin),
+             //   .B(C[i-1]),
+             //   .Sum(Sum[i]),
+             //   .Cout(Cout)
+            //);
+            assign Sum[i] = C[i] ^ Cin;
         end else begin
             FA FA(
                 .A(A[i]),

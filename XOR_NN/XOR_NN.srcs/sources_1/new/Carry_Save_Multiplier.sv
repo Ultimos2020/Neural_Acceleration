@@ -29,7 +29,7 @@ module Carry_Save_Multiplier #(parameter n = 4)(
 logic [n-1:0] P [n-1:1]; // Partial products
 logic [n-1:0] S [n-1:0]; // Sum
 logic [n-1:0] C [n-1:1]; // Carry
-logic check;
+//ogic check;
 
 assign S[0][n-1:0] = A & {n{B[0]}};
 //assign C[0] = {(n){1'b0}};
@@ -58,26 +58,35 @@ generate
     for (i = 1; i < n; i = i + 1) begin : cs_gen
     if (i == 1) begin
         for (j = 0; j < n; j = j + 1) begin : ha_init
-                    HA HA_init(
+        if (j == n-1) begin
+                     HA HA_init_last(
                         .A(P[i][j]),
-                        .B(S[i-1][j]),
+                        .B(1'b0),
                         .Sum(S[i][j]),
                         .Cout(C[i][j])
                     );
+        end else begin
+                    HA HA_init(
+                        .A(P[i][j]),
+                        .B(S[i-1][j+1]),
+                        .Sum(S[i][j]),
+                        .Cout(C[i][j])
+                    );
+            end 
             end
     end else begin
         for (j = 0; j < n; j = j + 1) begin : fa_gen
             if (j == n-1) begin
-                HA HA1(
+                HA HA_last(
                     .A(P[i][j]),
                     .B(C[i-1][j]),
                     .Sum(S[i][j]),
                     .Cout(C[i][j])
                 );
             end else begin
-                FA FA1(
+                FA FA_bulk(
                     .A(P[i][j]),
-                    .B(S[i-1][j]),
+                    .B(S[i-1][j+1]),
                     .Cin(C[i-1][j]),
                     .Sum(S[i][j]),
                     .Cout(C[i][j])
@@ -92,8 +101,7 @@ RCA #(n) RCA_final(
     .A(S[n-1][n-1:1]),
     .B(C[n-1][n-2:0]),
     .Cin(C[n-1][n-1]),
-    .Sum(Product[2*n-1:n]),
-    .Cout(check)
+    .Sum(Product[2*n-1:n])
 );
 
 //assign Product[n-1:0] = S[n-1:0][1];
