@@ -10,14 +10,14 @@ def double_to_hex(f: float) -> str:
     return hex(struct.unpack('>Q', struct.pack('>d', f))[0])
 
 # Example values (1.0 + 2.0)
-h1 = "0x0340_0000_0000_0001"  # 1.0
-h2 = "0x7FEFFFFFFFFFFFFF"  # 2.0
+h1 = "0x0010000000000001"  # 1.0
+h2 = "0x0010000000000000"  # 2.0
 
 f1 = hex_to_double(h1)
 f2 = hex_to_double(h2)
-s = f1 + f2
+s = f1 - f2
 
-print(f"Adding {h1} ({f1}) + {h2} ({f2})")
+print(f"sub {h1} ({f1}) - {h2} ({f2})")
 print(f"Result float   : {s}")
 print(f"Result hex     : {double_to_hex(s)}")
 print(f"Result binary  : {bin(struct.unpack('>Q', struct.pack('>d', s))[0])}")
