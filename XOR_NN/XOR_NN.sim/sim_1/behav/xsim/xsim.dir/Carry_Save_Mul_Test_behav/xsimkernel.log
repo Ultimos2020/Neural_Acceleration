@@ -1,0 +1,7 @@
+Running: xsim.dir/Carry_Save_Mul_Test_behav/xsimk.exe -simmode gui -wdb Carry_Save_Mul_Test_behav.wdb -simrunnum 0 -socket 58962
+Design successfully loaded
+Design Loading Memory Usage: 9836 KB (Peak: 9836 KB)
+Design Loading CPU Usage: 0 ms
+Simulation completed
+Simulation Memory Usage: 10512 KB (Peak: 10512 KB)
+Simulation CPU Usage: 31 ms

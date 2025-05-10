@@ -93,8 +93,12 @@ always_comb begin : Intra_group_sel
     end
 end
 
+logic correction_denorm;
+
+assign correction_denorm = group_sel[0];
+
 assign leading_1 = {4'b0000, group_intra_val} + {1'b0,group_val, 3'b000};
-assign shift = |leading_1 ? 7'd52 - leading_1 : 8'd0;
+assign shift = (correction_denorm & ~|leading_1) || |leading_1 ? 7'd52 - leading_1 : 8'd0;
 assign direction = leading_1 == 7'd53 ? 1'b1 : 1'b0; // 1 for left shift, 0 for right shift
 
 endmodule

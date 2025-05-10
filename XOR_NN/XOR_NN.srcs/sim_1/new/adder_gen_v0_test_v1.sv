@@ -63,15 +63,23 @@ module add_gen_v0_test_v1();
         errors = errors + 1;
         mismatch = 1;
         //#10;
-        $display(" [%0s] ERROR: A=0x%016h, B=0x%016h, op=%0d → got 0x%016h, expected 0x%016h",
-                 name, a, b, op, Res, expected);
+        $display(" [%0s] ERROR: A=0x%016h, B=0x%016h, op=%0d → got 0x%016h, expected 0x%016h", name, a, b, op, Res, expected);
+
+        if (Res[63] != expected[63]) begin
+          $display(" [%0s] ERROR: Sign bit mismatch", name);
+        end if (Res[62:52] != expected[62:52]) begin
+          $display(" [%0s] ERROR: Exponent mismatch", name);
+        end if (Res[51:0] != expected[51:0]) begin
+          $display(" [%0s] ERROR: Mantissa mismatch", name);
+        end //else begin
+          //$display(" [%0s] ERROR: Unknown mismatch", name);
+        //end
         
       end else begin
         errors = errors + 0;
         mismatch = 0;
         //#10;
-        $display(" [%0s] PASS: A=0x%016h, B=0x%016h, op=%0d → got 0x%016h, expected 0x%016h",
-                  name, a, b, op, Res, expected);
+        $display(" [%0s] PASS: A=0x%016h, B=0x%016h, op=%0d → got 0x%016h, expected 0x%016h", name, a, b, op, Res, expected);
         
       end
     end
@@ -148,7 +156,41 @@ module add_gen_v0_test_v1();
              64'h4024_0000_0000_0000,
              3'b001,
              64'h4028_0000_0000_0000,
-             "2+10");                                   
+             "2+10");
+
+     // 1 - 1 = 0
+    run_case(64'h3FF0000000000000,
+             64'h3FF0000000000000,
+             3'b010,
+             64'h0000000000000000,
+             "1-1");
+
+    //999 - 999 = 0
+    run_case(64'h408F380000000000,
+             64'h408F380000000000,
+             3'b010,
+             64'h0000000000000000,
+             "999-999");
+
+    //1.7976931348623157E+308 + 1.7976931348623157E+308 = inf
+    run_case(64'h7FEFFFFFFFFFFFFF,
+             64'h7FEFFFFFFFFFFFFF,
+             3'b001,
+             64'h7FF0000000000000,
+             "max+max"); 
+
+        //-1.7976931348623157E+308 - 1.7976931348623157E+308 = inf
+    run_case(64'hFFEFFFFFFFFFFFFF,
+             64'h7FEFFFFFFFFFFFFF,
+             3'b010,
+             64'hFFF0000000000000,
+             "max+max");
+
+    run_case(64'h0010000000000001,
+             64'h0010000000000000,
+             3'b010,
+             64'h0000000000000001,
+             "to get smallest value");                            
 
     // Summary
     if (errors) begin
