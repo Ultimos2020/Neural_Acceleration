@@ -4,14 +4,15 @@ import numpy as np
 import pandas as pd
 #from scipy.optimize import newton
 from scipy.optimize import root_scalar
+import matplotlib.pyplot as plt
 
 max = -100000000
 max_x = 0
 min = 100000000
 min_x = 0
 
-start = -5.0   # lower bound of x
-end   =  5.0   # upper bound of x
+start = -15.0   # lower bound of x
+end   =  15.0   # upper bound of x
 step  =  0.00001   # step size
 
 
@@ -38,8 +39,8 @@ def inverse_sigmoid_derivative_2(y, x0,x1):
     #x0 = x_estimate
     bracket = [x0, x1]
     root = root_scalar(g, bracket=bracket, method='brentq', xtol=1e-6, maxiter=1000)
-    print("root = ", root.root)
-    print("y = ", y)
+    #print("root = ", root.root)
+    #print("y = ", y)
     return root.root
     
 
@@ -75,13 +76,8 @@ def point_extractor(x):
         x2 = -x7
         x3 = -x6
         x4 = -x5
-
-
     
     print(f"x1 = {x1:.6f}, x2 = {x2:.6f}, x3 = {x3:.6f}, x4 = {x4:.6f}, x5 = {x5:.6f}, x6 = {x6:.6f}, x7 = {x7:.6f}, x8 = {x8:.6f}")
- 
-
-    
     return x1, x2, x3, x4, x5, x6, x7, x8
 
 def extrema(y,x):
@@ -162,11 +158,78 @@ def error_measure(x1, x2, x3, x4, x5, x6, x7, x8, m0, c0, m1, c1, m2, c2, m3, c3
         #print(f"x = {x:6.2f} → sigmoid(x) = {y_true:.6f} → piecewise(x) = {y:.6f} → error = {error:.6f}")
         rows.append([x, y_true, y, error])
     
-    df = pd.DataFrame(rows, columns=['x', 'sigmoid(x)', 'piecewise(x)', 'error'])
-    df.to_csv('sigmoid_piecewise.csv', index=False, float_format='%.6f')
+    #df = pd.DataFrame(rows, columns=['x', 'sigmoid(x)', 'piecewise(x)', 'error'])
+    #df.to_csv('sigmoid_piecewise.csv', index=False, float_format='%.6f')
     
     error_squared = error_2/len(x_values)
     print(f"error_squared = {error_squared:.6f}")
+
+############################
+    
+
+    x = np.linspace(start, end, 100000)
+
+    breakpoints = [x1, x2, x3, x4, x5, x6, x7, x8]
+    #conds = [x < breakpoints[0]]
+    #for i in range(len(breakpoints) - 1):
+     #   conds.append((x >= breakpoints[i]) & (x < breakpoints[i + 1])) 
+    
+    #conds.append(x >= breakpoints[-1])
+    condlist = [
+    x < x1,
+    (x >= x1) & (x < x2),
+    (x >= x2) & (x < x3),
+    (x >= x3) & (x < x4),
+    (x >= x4) & (x < x5),
+    (x >= x5) & (x < x6),
+    (x >= x6) & (x < x7),
+    (x >= x7) & (x < x8),
+    (x >= x8)
+    ]
+    #for cond in condlist:
+      #  print(cond)
+
+    func = [lambda x: m0*x + c0,
+            lambda x: m1*x + c1,
+            lambda x: m2*x + c2,
+            lambda x: m3*x + c3,
+            lambda x: m4*x + c4,
+            lambda x: m5*x + c5,
+            lambda x: m6*x + c6,
+            lambda x: m7*x + c7,
+            lambda x: m8*x + c8]
+    
+    y = np.piecewise(x, condlist, func)
+    y_true = sigmoid(x)
+    error = []
+    error_diff = []
+    for i in range(len(y)):
+        error_diff.append(abs(y[i]-y_true[i]))
+        if (y_true[i] == 0 or y[i] == 0):
+            if (y[i] == y_true[i]):
+                error.append(1)
+            else:
+                if (y[i] == 0):   
+                    error.append (abs(y_true[i]))
+                else:
+                    error.append (abs(y[i]))
+        else:
+            error.append(abs((y[i]/y_true[i])))
+        
+        if (error[i] == 0):
+            print("error = 0, y_true = ", y_true[i], "y = ", y[i])
+
+    error = np.array(error)
+
+    plt.plot(x, y_true, label='Sigmoid')
+    plt.plot(x, y, label='Piecewise')
+    #plt.plot(x, error, label='Error')
+    plt.plot(x, error_diff, label='Error diff')
+    plt.title('Sigmoid and Piecewise Function')
+    plt.axhline(0, color='black', lw=0.01)
+    plt.axvline(0, color='black', lw=0.01)
+    plt.grid(True)
+    plt.show()
 
 
 
