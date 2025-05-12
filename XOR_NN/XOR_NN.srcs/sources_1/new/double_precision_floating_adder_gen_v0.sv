@@ -85,8 +85,8 @@ assign B_mantissa_in_alu = out_mantissa_pretended_shifted;
 mantissa_alu_gen_vo mantissa_alu (
     .A_mantissa_pretended(A_mantissa_in_alu),
     .B_mantissa_pretended(B_mantissa_in_alu),
-    .A_sign(A_sign),
-    .B_sign(B_sign),
+    .A_sign(A_sign_in_alu),
+    .B_sign(B_sign_in_alu),
     .select(select),
     .operation(operation),
     .Res_sign(Res_sign),
