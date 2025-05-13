@@ -65,9 +65,9 @@ expo_alu_gen_v1 expo_alu_gen_v1_inst (
     .select(select),
     .Arth_op(Arth_op)
 );
-
-logic [2*n+1:0] Product_noround;
 integer product_in_size = mantisa + 1;
+logic [2*product_in_size-1:0] Product_noround;
+
 
 Carry_Save_Multiplier #(product_in_size) Carry_Save_Multiplier_inst (
     .A(A_mantisa_prefix),
@@ -75,7 +75,25 @@ Carry_Save_Multiplier #(product_in_size) Carry_Save_Multiplier_inst (
     .Product(Product_noround)
 );
 
-logic [n-1:0] Product_round;
+logic shift_left;
+
+assign shift_left = Product_noround[2*product_in_size-1];
+
+logic [2*product_in_size-1:0] Product_shifted_no_prefix;
+assign Product_shifted = shift_left ? Product_noround [2*product_in_size:1] : Product_noround[2*product_in_size-1:0];
+
+logic [product_in_size-1:0] Product_round, Product_truncated;
+loigc round_off = Product_noround[n-1];
+
+assign Product_truncated = Product_shifted[product_in_size-1:n];
+
+always_comb begin : Product_round_off
+    if (round_off) begin
+        Product_round = Product_shifted[product_in_size-1:n] + 1;
+    end else begin
+        Product_round = Product_shifted[product_in_size-1:n];
+    end
+end
 
 //assign Product_round = Product_noround[2*n+1:1];
 
