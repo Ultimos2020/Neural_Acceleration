@@ -47,20 +47,24 @@
     `define n 4
 `endif
 
-ifndef approx
+`ifdef approx
     `define pro_size n
-else
+    `define gen_approx 1
+`else
     `define pro_size 2*n
+    `define gen_approx 0
 `endif
 
-module Carry_Save_Multiplier #(parameter int n = `n)(
+module Carry_Save_Multiplier #(parameter int n = `n, pro_size = `pro_size)(
     input [n-1:0] A,
     input [n-1:0] B,
     output logic [pro_size-1:0] Product
     );
 
+localparam int aprrox = `gen_approx;
+
 generate
-    if (`aprrox) begin
+    if (aprrox) begin
                 // This is the case for approximation
         logic [n-1:0] P [n-1:1]; // Partial products
         logic [n-1:0] S [n-1:0]; // Sum
@@ -72,7 +76,7 @@ generate
         //assign P[0] = {n{1'b0}};
         genvar i, j;
 
-        generate
+        //generate
             for (i = 1; i < n; i = i + 1) begin : pp_gen
                 assign P[i] = A & {n{B[i]}};
             end
@@ -84,6 +88,13 @@ generate
                             HA HA_init_last(
                                 .A(P[i][j]),
                                 .B(1'b0),
+                                .Sum(S[i][j]),
+                                .Cout(C[i][j])
+                            );
+                end else if (j == 0) begin
+                            HA HA_init(
+                                .A(P[i][j]),
+                                .B(S[i-1][j+1]),
                                 .Sum(S[i][j]),
                                 .Cout(C[i][j])
                             );
@@ -117,7 +128,7 @@ generate
                 end
             end
         end
-        endgenerate
+        //endgenerate
 
         RCA #(n) RCA_final(
             .A(S[n-1][n-1:1]),
@@ -128,11 +139,11 @@ generate
 
         //assign Product[n-1:0] = S[n-1:0][1];
         genvar k;
-        generate
+        //generate
             for (k = 0; k < n; k = k + 1) begin : product_assign
                 assign Product[k] = S[k][0];
             end
-        endgenerate
+        //endgenerate
     
     end
     else begin
@@ -147,7 +158,7 @@ generate
         //assign P[0] = {n{1'b0}};
         genvar i, j;
 
-        generate
+        //generate
             for (i = 1; i < n; i = i + 1) begin : pp_gen
                 assign P[i] = A & {n{B[i]}};
             end
@@ -192,7 +203,7 @@ generate
                 end
             end
         end
-        endgenerate
+        //endgenerate
 
         RCA #(n) RCA_final(
             .A(S[n-1][n-1:1]),
@@ -203,11 +214,11 @@ generate
 
         //assign Product[n-1:0] = S[n-1:0][1];
         genvar k;
-        generate
+        //generate
             for (k = 0; k < n; k = k + 1) begin : product_assign
                 assign Product[k] = S[k][0];
             end
-        endgenerate
+        //endgenerate
 
     end
 endgenerate

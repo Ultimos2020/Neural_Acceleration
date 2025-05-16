@@ -20,13 +20,20 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module HA(
+module HA #(parameter approx = 0) (
     input A,
     input B,
     output Sum,
     output Cout
     );
 
-assign {Cout, Sum} = A + B;
+generate
+    if (approx == 1) begin
+        assign Cout = A & B;
+    end else begin
+        assign {Cout, Sum} = A + B;
+    end
+endgenerate
+
 
 endmodule
