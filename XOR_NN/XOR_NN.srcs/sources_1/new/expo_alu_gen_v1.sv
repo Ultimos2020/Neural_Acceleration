@@ -16,7 +16,7 @@
 // Revision:
 // Revision 0.01 - File Created
 // Additional Comments: Super Saiyan 3 is here.
-// 
+// Testing for changes from iPAD
 //////////////////////////////////////////////////////////////////////////////////
 `ifdef single_precision
     `define mantisa 23
