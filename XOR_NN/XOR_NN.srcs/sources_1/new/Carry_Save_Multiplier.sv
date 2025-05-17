@@ -55,6 +55,8 @@
     `define gen_approx 0
 `endif
 
+
+
 module Carry_Save_Multiplier #(parameter int n = `n, pro_size = `pro_size)(
     input [n-1:0] A,
     input [n-1:0] B,
@@ -65,11 +67,11 @@ localparam int aprrox = `gen_approx;
 
 generate
     if (aprrox) begin
-                // This is the case for approximation
+        // This is the case for approximation
         logic [n-1:0] P [n-1:1]; // Partial products
         logic [n-1:0] S [n-1:0]; // Sum
         logic [n-1:0] C [n-1:1]; // Carry
-        //ogic check;
+        //logic check;
 
         assign S[0][n-1:0] = A & {n{B[0]}};
         //assign C[0] = {(n){1'b0}};

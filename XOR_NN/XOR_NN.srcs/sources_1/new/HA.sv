@@ -18,13 +18,18 @@
 // Additional Comments:
 // 
 //////////////////////////////////////////////////////////////////////////////////
+`ifdef approx
+    `define ports , output logic Cout
+    `define gen_approx 1
+`else
+    `define ports , output logic Sum, Cout
+    `define gen_approx 0
+`endif 
 
-
-module HA #(parameter approx = 0) (
+module HA #(parameter approx = `gen_approx) (
     input A,
-    input B,
-    output Sum,
-    output Cout
+    input B
+    `ports
     );
 
 generate
