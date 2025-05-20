@@ -47,10 +47,10 @@ def inverse_sigmoid_derivative_2(y, x0,x1):
 def point_extractor(x):
     """For a symmetry"""
     y = sigmoid_derivative_2(x)
-    y5 = y/4
-    y6 = 0.75*y
-    y7 = y6
-    y8 = y5
+    y5 = y*0.5
+    y6 = y*0.88
+    y7 = y*0.56
+    y8 = y*0.167
     y1 = -y8
     y2 = -y7
     y3 = -y6
@@ -60,12 +60,12 @@ def point_extractor(x):
 
     if approach == 0:
         x5 = inverse_sigmoid_derivative_2(y5, 0, x)
-        x6 = inverse_sigmoid_derivative_2(y6, 0, x)
+        x6 = inverse_sigmoid_derivative_2(y6, x, 15)
         x7 = inverse_sigmoid_derivative_2(y7, x, 15)
         x8 = inverse_sigmoid_derivative_2(y8, x, 15)
         x1 = inverse_sigmoid_derivative_2(y1, -15, -x)
         x2 = inverse_sigmoid_derivative_2(y2, -15, -x)
-        x3 = inverse_sigmoid_derivative_2(y3, -x, 0)
+        x3 = inverse_sigmoid_derivative_2(y3, -15, -x)
         x4 = inverse_sigmoid_derivative_2(y4, -x, 0)
     else:
         x5 = x/4
@@ -77,7 +77,7 @@ def point_extractor(x):
         x3 = -x6
         x4 = -x5
     
-    print(f"x1 = {x1:.6f}, x2 = {x2:.6f}, x3 = {x3:.6f}, x4 = {x4:.6f}, x5 = {x5:.6f}, x6 = {x6:.6f}, x7 = {x7:.6f}, x8 = {x8:.6f}")
+    #print(f"x1 = {x1:.6f}, x2 = {x2:.6f}, x3 = {x3:.6f}, x4 = {x4:.6f}, x5 = {x5:.6f}, x6 = {x6:.6f}, x7 = {x7:.6f}, x8 = {x8:.6f}")
     return x1, x2, x3, x4, x5, x6, x7, x8
 
 def extrema(y,x):
@@ -90,9 +90,19 @@ def extrema(y,x):
         min = y
         min_x = x
 
+def intersect(m1, c1, m2, c2):
+    """Find the intersection of two lines."""
+    if m1 == m2:
+        print("m1 == m2")
+        return None
+    x = (c2 - c1) / (m1 - m2)
+    #y = m1 * x + c1
+    return x
+#, y
+
 def piece_wise(x1, x2, x3, x4, x5, x6, x7, x8):
-    m0 = 0
-    c0 = 0
+    m0 = 0.0
+    c0 = 0.0
     #print("x3-x2", x3-x2)
     m1 = (sigmoid(x2)-sigmoid(x1))/(x2-x1)
     c1 = intercept(x1,x2)
@@ -110,15 +120,26 @@ def piece_wise(x1, x2, x3, x4, x5, x6, x7, x8):
     c7 = intercept(x7,x8)
     m8 = 0
     c8 = 1
-    print(f" y = {m0:.6f}*x + {c0:.6f} for x < {x1:.6f}")
-    print(f" y = {m1:.6f}*x + {c1:.6f} for {x1:.6f} <= x < {x2:.6f}")
-    print(f" y = {m2:.6f}*x + {c2:.6f} for {x2:.6f} <= x < {x3:.6f}")
-    print(f" y = {m3:.6f}*x + {c3:.6f} for {x3:.6f} <= x < {x4:.6f}")
-    print(f" y = {m4:.6f}*x + {c4:.6f} for {x4:.6f} <= x < {x5:.6f}")
-    print(f" y = {m5:.6f}*x + {c5:.6f} for {x5:.6f} <= x < {x6:.6f}")
-    print(f" y = {m6:.6f}*x + {c6:.6f} for {x6:.6f} <= x < {x7:.6f}")
-    print(f" y = {m7:.6f}*x + {c7:.6f} for {x7:.6f} <= x < {x8:.6f}")
-    print(f" y = {m8:.6f}*x + {c8:.6f} for {x8:.6f} <= x")
+
+    x_1 = intersect(m0, c0, m1, c1)
+    print("x_1 = ", x_1)
+    x_2 = intersect(m1, c1, m2, c2)
+    x_3 = intersect(m2, c2, m3, c3)
+    x_4 = intersect(m3, c3, m4, c4)
+    x_5 = intersect(m4, c4, m5, c5)
+    x_6 = intersect(m5, c5, m6, c6)
+    x_7 = intersect(m6, c6, m7, c7)
+    x_8 = intersect(m7, c7, m8, c8)
+
+    print(f" y = {m0:.6f}*x + {c0:.6f} for x < {x_1:.6f}")
+    print(f" y = {m1:.6f}*x + {c1:.6f} for {x_1:.6f} <= x < {x_2:.6f}")
+    print(f" y = {m2:.6f}*x + {c2:.6f} for {x_2:.6f} <= x < {x_3:.6f}")
+    print(f" y = {m3:.6f}*x + {c3:.6f} for {x_3:.6f} <= x < {x_4:.6f}")
+    print(f" y = {m4:.6f}*x + {c4:.6f} for {x_4:.6f} <= x < {x_5:.6f}")
+    print(f" y = {m5:.6f}*x + {c5:.6f} for {x_5:.6f} <= x < {x_6:.6f}")
+    print(f" y = {m6:.6f}*x + {c6:.6f} for {x_6:.6f} <= x < {x_7:.6f}")
+    print(f" y = {m7:.6f}*x + {c7:.6f} for {x_7:.6f} <= x < {x_8:.6f}")
+    print(f" y = {m8:.6f}*x + {c8:.6f} for {x_8:.6f} <= x")
     return m0, c0, m1, c1, m2, c2, m3, c3, m4, c4, m5, c5, m6, c6, m7, c7, m8, c8
 
 rows = []
@@ -169,11 +190,14 @@ def error_measure(x1, x2, x3, x4, x5, x6, x7, x8, m0, c0, m1, c1, m2, c2, m3, c3
 
     x = np.linspace(start, end, 100000)
 
-    breakpoints = [x1, x2, x3, x4, x5, x6, x7, x8]
+    #breakpoints = [x1, x2, x3, x4, x5, x6, x7, x8]
     #conds = [x < breakpoints[0]]
     #for i in range(len(breakpoints) - 1):
      #   conds.append((x >= breakpoints[i]) & (x < breakpoints[i + 1])) 
     
+
+
+    #print (f"x1 = {x1:.6f}, x2 = {x2:.6f}, x3 = {x3:.6f}, x4 = {x4:.6f}, x5 = {x5:.6f}, x6 = {x6:.6f}, x7 = {x7:.6f}, x8 = {x8:.6f}")
     #conds.append(x >= breakpoints[-1])
     condlist = [
     x < x1,
@@ -201,10 +225,16 @@ def error_measure(x1, x2, x3, x4, x5, x6, x7, x8, m0, c0, m1, c1, m2, c2, m3, c3
     
     y = np.piecewise(x, condlist, func)
     y_true = sigmoid(x)
+    y_true_1 = sigmoid_derivative(x)
+    y_true_2 = sigmoid_derivative_2(x)
     error = []
     error_diff = []
+    error_max = 0
     for i in range(len(y)):
         error_diff.append(abs(y[i]-y_true[i]))
+        if (error_diff[i] > error_max):
+            error_max = error_diff[i]
+            error_max_ratio = (error_max*100)/y_true[i]
         if (y_true[i] == 0 or y[i] == 0):
             if (y[i] == y_true[i]):
                 error.append(1)
@@ -220,7 +250,10 @@ def error_measure(x1, x2, x3, x4, x5, x6, x7, x8, m0, c0, m1, c1, m2, c2, m3, c3
             print("error = 0, y_true = ", y_true[i], "y = ", y[i])
 
     error = np.array(error)
-
+    print("error_max = ", error_max)
+    print("error_max_ratio = ", error_max_ratio)
+    #plt.plot(x, y_true_1, label='Sigmoid derivative')
+    #plt.plot(x, y_true_2, label='Sigmoid second derivative')
     plt.plot(x, y_true, label='Sigmoid')
     plt.plot(x, y, label='Piecewise')
     #plt.plot(x, error, label='Error')
@@ -277,6 +310,14 @@ def main():
     min_x = 0
    
     m0, c0, m1, c1, m2, c2, m3, c3, m4, c4, m5, c5, m6, c6, m7, c7, m8, c8 = piece_wise(x1, x2, x3, x4, x5, x6, x7, x8)
+    x1 = intersect(m0, c0, m1, c1)
+    x2 = intersect(m1, c1, m2, c2)
+    x3 = intersect(m2, c2, m3, c3)
+    x4 = intersect(m3, c3, m4, c4)
+    x5 = intersect(m4, c4, m5, c5)
+    x6 = intersect(m5, c5, m6, c6)
+    x7 = intersect(m6, c6, m7, c7)
+    x8 = intersect(m7, c7, m8, c8)
     error_measure(x1, x2, x3, x4, x5, x6, x7, x8, m0, c0, m1, c1, m2, c2, m3, c3, m4, c4, m5, c5, m6, c6, m7, c7, m8, c8)
     
     print(f"max = {max:.6f} at x = {max_x:.6f}")
