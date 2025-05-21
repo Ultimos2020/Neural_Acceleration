@@ -11,6 +11,7 @@ max_x = 0
 min = 100000000
 min_x = 0
 
+abort = 0
 start = -15.0   # lower bound of x
 end   =  15.0   # upper bound of x
 step  =  0.00001   # step size
@@ -42,23 +43,33 @@ def inverse_sigmoid_derivative_2(y, x0,x1):
     #print("root = ", root.root)
     #print("y = ", y)
     return root.root
+
+def inverse_sigmoid_derivative(y, x0,x1):
+    g = lambda x: sigmoid_derivative(x) - y
+    #fprime = lambda x: sigmoid_derivative_3(x_estimate)
+    #x0 = x_estimate
+    bracket = [x0, x1]
+    root = root_scalar(g, bracket=bracket, method='brentq', xtol=1e-6, maxiter=1000)
+    #print("root = ", root.root)
+    #print("y = ", y)
+    return root.root
     
 
-def point_extractor(x):
+def point_extractor(x, w0, w1, w2):
     """For a symmetry"""
-    y = sigmoid_derivative_2(x)
-    y5 = y*0.5
-    y6 = y*0.88
-    y7 = y*0.56
-    y8 = y*0.167
-    y1 = -y8
-    y2 = -y7
-    y3 = -y6
-    y4 = -y5
 
-    approach = 0
+    approach = 3
 
     if approach == 0:
+        y = sigmoid_derivative_2(x)
+        y5 = y*0.5
+        y6 = y*0.88
+        y7 = y*0.56
+        y8 = y*0.167
+        y1 = -y8
+        y2 = -y7
+        y3 = -y6
+        y4 = -y5
         x5 = inverse_sigmoid_derivative_2(y5, 0, x)
         x6 = inverse_sigmoid_derivative_2(y6, x, 15)
         x7 = inverse_sigmoid_derivative_2(y7, x, 15)
@@ -67,7 +78,7 @@ def point_extractor(x):
         x2 = inverse_sigmoid_derivative_2(y2, -15, -x)
         x3 = inverse_sigmoid_derivative_2(y3, -15, -x)
         x4 = inverse_sigmoid_derivative_2(y4, -x, 0)
-    else:
+    elif approach == 1:
         x5 = x/4
         x6 = 0.75*x
         x7 = x + x5
@@ -76,8 +87,48 @@ def point_extractor(x):
         x2 = -x7
         x3 = -x6
         x4 = -x5
+    elif approach == 2:
+        y5_1 = (sigmoid_derivative (0) + sigmoid_derivative (x))*0.5
+        x5 = inverse_sigmoid_derivative(y5_1, 0, x)
+        y7_1 = (sigmoid_derivative (x) + sigmoid_derivative (5))*0.5
+        x7 = inverse_sigmoid_derivative(y7_1, x, 15)
+        y6_1 = (3*sigmoid_derivative (x) + sigmoid_derivative (5))*0.25
+        x6 = inverse_sigmoid_derivative(y6_1, x, 15)
+        y8_1 = (sigmoid_derivative (x) + 3*sigmoid_derivative (5))*0.25
+        x8 = inverse_sigmoid_derivative(y8_1, x, 15)    
+        x1 = -x8
+        x2 = -x7
+        x3 = -x6
+        x4 = -x5
+    elif approach == 3:
+        #w0 = 1
+        #w1 = 1
+        #w2 = 1
+        r0 = (1+w0)
+        k0 = sigmoid_derivative (x) * w0
+        r1 = -w1
+        s1 = 1 + w1
+        s2 = w2
+        t2 = 1 + w2
+        k2 = sigmoid_derivative (10)
+        D = t2*r1 + r0*(t2*s1 - s2)
+        y6_1 = (k2 + (t2*s1 - s2)*k0) / D
+        y7_1 = (r0*k2 - t2*r1*k0)      / D
+        y8_1 = ((r1 + r0*s1)*k2 - r1*s2*k0) / D
+        y5_1 = (sigmoid_derivative (0) + sigmoid_derivative (x))*0.5
+
+        x5 = inverse_sigmoid_derivative(y5_1, 0, x)
+        x7 = inverse_sigmoid_derivative(y7_1, x, 15)
+        x6 = inverse_sigmoid_derivative(y6_1, x, 15)
+        x8 = inverse_sigmoid_derivative(y8_1, x, 15)    
+        x1 = -x8
+        x2 = -x7
+        x3 = -x6
+        x4 = -x5
+
+
     
-    #print(f"x1 = {x1:.6f}, x2 = {x2:.6f}, x3 = {x3:.6f}, x4 = {x4:.6f}, x5 = {x5:.6f}, x6 = {x6:.6f}, x7 = {x7:.6f}, x8 = {x8:.6f}")
+    #(f"x1 = {x1:.6f}, x2 = {x2:.6f}, x3 = {x3:.6f}, x4 = {x4:.6f}, x5 = {x5:.6f}, x6 = {x6:.6f}, x7 = {x7:.6f}, x8 = {x8:.6f}")
     return x1, x2, x3, x4, x5, x6, x7, x8
 
 def extrema(y,x):
@@ -100,7 +151,7 @@ def intersect(m1, c1, m2, c2):
     return x
 #, y
 
-def piece_wise(x1, x2, x3, x4, x5, x6, x7, x8):
+def piece_wise(x1, x2, x3, x4, x5, x6, x7, x8, key):
     m0 = 0.0
     c0 = 0.0
     #print("x3-x2", x3-x2)
@@ -122,7 +173,7 @@ def piece_wise(x1, x2, x3, x4, x5, x6, x7, x8):
     c8 = 1
 
     x_1 = intersect(m0, c0, m1, c1)
-    print("x_1 = ", x_1)
+   # print("x_1 = ", x_1)
     x_2 = intersect(m1, c1, m2, c2)
     x_3 = intersect(m2, c2, m3, c3)
     x_4 = intersect(m3, c3, m4, c4)
@@ -131,19 +182,21 @@ def piece_wise(x1, x2, x3, x4, x5, x6, x7, x8):
     x_7 = intersect(m6, c6, m7, c7)
     x_8 = intersect(m7, c7, m8, c8)
 
-    print(f" y = {m0:.6f}*x + {c0:.6f} for x < {x_1:.6f}")
-    print(f" y = {m1:.6f}*x + {c1:.6f} for {x_1:.6f} <= x < {x_2:.6f}")
-    print(f" y = {m2:.6f}*x + {c2:.6f} for {x_2:.6f} <= x < {x_3:.6f}")
-    print(f" y = {m3:.6f}*x + {c3:.6f} for {x_3:.6f} <= x < {x_4:.6f}")
-    print(f" y = {m4:.6f}*x + {c4:.6f} for {x_4:.6f} <= x < {x_5:.6f}")
-    print(f" y = {m5:.6f}*x + {c5:.6f} for {x_5:.6f} <= x < {x_6:.6f}")
-    print(f" y = {m6:.6f}*x + {c6:.6f} for {x_6:.6f} <= x < {x_7:.6f}")
-    print(f" y = {m7:.6f}*x + {c7:.6f} for {x_7:.6f} <= x < {x_8:.6f}")
-    print(f" y = {m8:.6f}*x + {c8:.6f} for {x_8:.6f} <= x")
+    if key == 1:
+        print(f" y = {m0:.6f}*x + {c0:.6f} for x < {x_1:.6f}")
+        print(f" y = {m1:.6f}*x + {c1:.6f} for {x_1:.6f} <= x < {x_2:.6f}")
+        print(f" y = {m2:.6f}*x + {c2:.6f} for {x_2:.6f} <= x < {x_3:.6f}")
+        print(f" y = {m3:.6f}*x + {c3:.6f} for {x_3:.6f} <= x < {x_4:.6f}")
+        print(f" y = {m4:.6f}*x + {c4:.6f} for {x_4:.6f} <= x < {x_5:.6f}")
+        print(f" y = {m5:.6f}*x + {c5:.6f} for {x_5:.6f} <= x < {x_6:.6f}")
+        print(f" y = {m6:.6f}*x + {c6:.6f} for {x_6:.6f} <= x < {x_7:.6f}")
+        print(f" y = {m7:.6f}*x + {c7:.6f} for {x_7:.6f} <= x < {x_8:.6f}")
+        print(f" y = {m8:.6f}*x + {c8:.6f} for {x_8:.6f} <= x")
+
     return m0, c0, m1, c1, m2, c2, m3, c3, m4, c4, m5, c5, m6, c6, m7, c7, m8, c8
 
 rows = []
-def error_measure(x1, x2, x3, x4, x5, x6, x7, x8, m0, c0, m1, c1, m2, c2, m3, c3, m4, c4, m5, c5, m6, c6, m7, c7, m8, c8):
+def error_measure(x1, x2, x3, x4, x5, x6, x7, x8, m0, c0, m1, c1, m2, c2, m3, c3, m4, c4, m5, c5, m6, c6, m7, c7, m8, c8, key):
     #start = -15.0   # lower bound of x
     #end   =  15.0   # upper bound of x
     #step  =  0.001   # step size
@@ -181,9 +234,9 @@ def error_measure(x1, x2, x3, x4, x5, x6, x7, x8, m0, c0, m1, c1, m2, c2, m3, c3
     
     #df = pd.DataFrame(rows, columns=['x', 'sigmoid(x)', 'piecewise(x)', 'error'])
     #df.to_csv('sigmoid_piecewise.csv', index=False, float_format='%.6f')
-    
-    error_squared = error_2/len(x_values)
-    print(f"error_squared = {error_squared:.6f}")
+    if (key == 1):
+        error_squared = error_2/len(x_values)
+        print(f"error_squared = {error_squared:.6f}")
 
 ############################
     
@@ -211,7 +264,7 @@ def error_measure(x1, x2, x3, x4, x5, x6, x7, x8, m0, c0, m1, c1, m2, c2, m3, c3
     (x >= x8)
     ]
     #for cond in condlist:
-      #  print(cond)
+    #  print(cond)
 
     func = [lambda x: m0*x + c0,
             lambda x: m1*x + c1,
@@ -250,19 +303,23 @@ def error_measure(x1, x2, x3, x4, x5, x6, x7, x8, m0, c0, m1, c1, m2, c2, m3, c3
             print("error = 0, y_true = ", y_true[i], "y = ", y[i])
 
     error = np.array(error)
-    print("error_max = ", error_max)
-    print("error_max_ratio = ", error_max_ratio)
-    #plt.plot(x, y_true_1, label='Sigmoid derivative')
-    #plt.plot(x, y_true_2, label='Sigmoid second derivative')
-    plt.plot(x, y_true, label='Sigmoid')
-    plt.plot(x, y, label='Piecewise')
-    #plt.plot(x, error, label='Error')
-    plt.plot(x, error_diff, label='Error diff')
-    plt.title('Sigmoid and Piecewise Function')
-    plt.axhline(0, color='black', lw=0.01)
-    plt.axvline(0, color='black', lw=0.01)
-    plt.grid(True)
-    plt.show()
+ 
+
+    if (key == 1):
+        #plt.plot(x, y_true_1, label='Sigmoid derivative')
+        #plt.plot(x, y_true_2, label='Sigmoid second derivative')
+        print("error_max = ", error_max)
+        print("error_max_ratio = ", error_max_ratio)
+        plt.plot(x, y_true, label='Sigmoid')
+        plt.plot(x, y, label='Piecewise')
+        #plt.plot(x, error, label='Error')
+        plt.plot(x, error_diff, label='Error diff')
+        plt.title('Sigmoid and Piecewise Function')
+        plt.axhline(0, color='black', lw=0.01)
+        plt.axvline(0, color='black', lw=0.01)
+        plt.grid(True)
+        plt.show()
+        
 
 
 
@@ -276,6 +333,7 @@ def intercept (x1,x2):
     x_values = np.arange(start_local, end_local + step_local, step_local)
     x_total = 0
     c = 0
+    global abort
     #print("x1 = ", x1)
     #print("x2 = ", x2)
     for x in x_values:
@@ -285,7 +343,13 @@ def intercept (x1,x2):
         c = temp + c
         x_total = x_total + x
     #print ("x_total = ", x_total)
-    c = c/len(x_values)
+    if len(x_values) > 0:
+        c = c/len(x_values)
+        
+    else:
+        print("x_values = 0, set invalid")
+        c = 0
+        abort = 1
     return c
 
 def main():
@@ -303,13 +367,94 @@ def main():
         #print(f"x = {x:6.2f} → sigmoid(x) = {y:.6f} → sigmoid'(x) = {z:.6f} -> sigmoid''(x) = {z2:.6f}")
     #print(f"max = {max:.6f} at x = {max_x:.6f}")
     #print(f"min = {min:.6f} at x = {min_x:.6f}")
-    x1, x2, x3, x4, x5, x6, x7, x8 = point_extractor(min_x)
+    
+    error_max_iteration = 0.013990 #0.015200 #10000
+
+    w0_key = 0.5 #0.3
+    w1_key = 0.6 #0.8
+    w2_key = 1.2 #1.4
+
+    search = 0
+    x_target = min_x
+    if search == 1:
+    
+
+        w0_start, w0_end, w0_step = 0.5, 1.2, 0.1 
+        w1_start, w1_end, w1_step = 0.4, 1.2, 0.1
+        w2_start, w2_end, w2_step = 1.0, 2.0, 0.1
+        
+        w0_vals = np.arange(w0_start, w0_end, w0_step)
+        w1_vals = np.arange(w1_start, w1_end, w1_step)
+        w2_vals = np.arange(w2_start, w2_end, w2_step)
+        global  abort
+        for w0 in w0_vals:
+            for w1 in w1_vals:
+                for w2 in w2_vals:
+                    abort = 0
+                    if abs((w0 + w1 + w2)) < 5:
+                        #print(f"w0 = {w0:.6f}, w1 = {w1:.6f}, w2 = {w2:.6f}")
+                        x1, x2, x3, x4, x5, x6, x7, x8 = point_extractor(x_target, w0, w1, w2)
+                        if (x1 < x2 and x2 < x3 and x3 < x4 and x4 < x5 and x5 < x6 and x6 < x7 and x7 < x8):
+                            abort = 0
+                        else:
+                            print("x1, x2, x3, x4, x5, x6, x7, x8 not in order")
+                            print(f"extream x = {min_x:.6f} x1 = {x1:.6f}, x2 = {x2:.6f}, x3 = {x3:.6f}, x4 = {x4:.6f}, x5 = {x5:.6f}, x6 = {x6:.6f}, x7 = {x7:.6f}, x8 = {x8:.6f}")
+                            abort = 1
+
+                        if abort == 1:
+                            print("abort = 1")
+                            continue
+                        max = -100000000
+                        max_x = 0
+                        min = 100000000
+                        min_x = 0
+                        key = 0
+                        m0, c0, m1, c1, m2, c2, m3, c3, m4, c4, m5, c5, m6, c6, m7, c7, m8, c8 = piece_wise(x1, x2, x3, x4, x5, x6, x7, x8,key)
+                        if abort == 1:
+                            print("abort = 1")
+                            continue
+                        x1 = intersect(m0, c0, m1, c1)
+                        x2 = intersect(m1, c1, m2, c2)
+                        x3 = intersect(m2, c2, m3, c3)
+                        x4 = intersect(m3, c3, m4, c4)
+                        x5 = intersect(m4, c4, m5, c5)
+                        x6 = intersect(m5, c5, m6, c6)
+                        x7 = intersect(m6, c6, m7, c7)
+                        x8 = intersect(m7, c7, m8, c8)
+                        
+                        error_measure(x1, x2, x3, x4, x5, x6, x7, x8, m0, c0, m1, c1, m2, c2, m3, c3, m4, c4, m5, c5, m6, c6, m7, c7, m8, c8, key)
+                        
+                        #print(f"max = {max:.6f} at x = {max_x:.6f}")
+                        #print(f"min = {min:.6f} at x = {min_x:.6f}")
+
+                        if (error_max_iteration > max and abort == 0):
+                            error_max_iteration = max
+                            w0_key = w0
+                            w1_key = w1
+                            w2_key = w2
+                            print("-------------------new key-----------------------------")
+                        else:
+                            print("-------------------no key-----------------------------")
+
+                        print(f"error_max_iteration = {error_max_iteration:.6f} max = {max:.6f} at x = {max_x:.6f}")
+                        print(f"w0 = {w0:.6f}, w1 = {w1:.6f}, w2 = {w2:.6f}")
+                        print("-----------------------------------------------------")
+
+        print ("-------------------final keys---------------------------")
+        print(f"w0 = {w0_key:.6f}, w1 = {w1_key:.6f}, w2 = {w2_key:.6f}")
+    else:
+        key = 1
+
+    print ("---------------------------Final database-----------------------------")
+    key = 1
+    x1, x2, x3, x4, x5, x6, x7, x8 = point_extractor(x_target, w0_key, w1_key, w2_key)
     max = -100000000
     max_x = 0
     min = 100000000
     min_x = 0
-   
-    m0, c0, m1, c1, m2, c2, m3, c3, m4, c4, m5, c5, m6, c6, m7, c7, m8, c8 = piece_wise(x1, x2, x3, x4, x5, x6, x7, x8)
+
+    m0, c0, m1, c1, m2, c2, m3, c3, m4, c4, m5, c5, m6, c6, m7, c7, m8, c8 = piece_wise(x1, x2, x3, x4, x5, x6, x7, x8, key)
+
     x1 = intersect(m0, c0, m1, c1)
     x2 = intersect(m1, c1, m2, c2)
     x3 = intersect(m2, c2, m3, c3)
@@ -318,10 +463,15 @@ def main():
     x6 = intersect(m5, c5, m6, c6)
     x7 = intersect(m6, c6, m7, c7)
     x8 = intersect(m7, c7, m8, c8)
-    error_measure(x1, x2, x3, x4, x5, x6, x7, x8, m0, c0, m1, c1, m2, c2, m3, c3, m4, c4, m5, c5, m6, c6, m7, c7, m8, c8)
+    error_measure(x1, x2, x3, x4, x5, x6, x7, x8, m0, c0, m1, c1, m2, c2, m3, c3, m4, c4, m5, c5, m6, c6, m7, c7, m8, c8, key)
     
     print(f"max = {max:.6f} at x = {max_x:.6f}")
     print(f"min = {min:.6f} at x = {min_x:.6f}")
+
+
+
+
+
 
 if __name__ == "__main__":
     main()
