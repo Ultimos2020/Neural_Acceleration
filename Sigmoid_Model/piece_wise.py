@@ -195,7 +195,7 @@ def piece_wise(x1, x2, x3, x4, x5, x6, x7, x8, key):
 
     return m0, c0, m1, c1, m2, c2, m3, c3, m4, c4, m5, c5, m6, c6, m7, c7, m8, c8
 
-rows = []
+# rows = []
 def error_measure(x1, x2, x3, x4, x5, x6, x7, x8, m0, c0, m1, c1, m2, c2, m3, c3, m4, c4, m5, c5, m6, c6, m7, c7, m8, c8, key):
     #start = -15.0   # lower bound of x
     #end   =  15.0   # upper bound of x
@@ -230,7 +230,7 @@ def error_measure(x1, x2, x3, x4, x5, x6, x7, x8, m0, c0, m1, c1, m2, c2, m3, c3
         error_2 = error ** 2 + error_2
         x_total = x_total + x
         #print(f"x = {x:6.2f} → sigmoid(x) = {y_true:.6f} → piecewise(x) = {y:.6f} → error = {error:.6f}")
-        rows.append([x, y_true, y, error])
+        # rows.append([x, y_true, y, error])
     
     #df = pd.DataFrame(rows, columns=['x', 'sigmoid(x)', 'piecewise(x)', 'error'])
     #df.to_csv('sigmoid_piecewise.csv', index=False, float_format='%.6f')
@@ -368,29 +368,38 @@ def main():
     #print(f"max = {max:.6f} at x = {max_x:.6f}")
     #print(f"min = {min:.6f} at x = {min_x:.6f}")
     
-    error_max_iteration = 0.013990 #0.015200 #10000
+    error_max_iteration = 0.013718551036547844 #0.015200 #10000
 
-    w0_key = 0.5 #0.3
-    w1_key = 0.6 #0.8
-    w2_key = 1.2 #1.4
+    w0_key = 1.3 #0.3
+    w1_key = 0.5 #0.8
+    w2_key = 0.7 #1.4
 
-    search = 0
+    search = 1
     x_target = min_x
     if search == 1:
     
-
-        w0_start, w0_end, w0_step = 0.5, 1.2, 0.1 
-        w1_start, w1_end, w1_step = 0.4, 1.2, 0.1
-        w2_start, w2_end, w2_step = 1.0, 2.0, 0.1
+        count = 0
+        pre_max = 99.99999999999999
+        w0_start, w0_end, w0_step = 0.6, 2.5, 0.1 
+        w1_start, w1_end, w1_step = 0.2, 2.5, 0.1
+        w2_start, w2_end, w2_step = 0.2, 2.5, 0.1
         
         w0_vals = np.arange(w0_start, w0_end, w0_step)
         w1_vals = np.arange(w1_start, w1_end, w1_step)
         w2_vals = np.arange(w2_start, w2_end, w2_step)
         global  abort
         for w0 in w0_vals:
+            #pre_max_2 = 99.99999999999999
+            count_2 = 0
             for w1 in w1_vals:
+                pre_max = 99.99999999999999
+                if (count_2 > 5):
+                    print("count_2 has caused to break")
+                    count_2 = 0
+                    break
                 for w2 in w2_vals:
                     abort = 0
+                    
                     if abs((w0 + w1 + w2)) < 5:
                         #print(f"w0 = {w0:.6f}, w1 = {w1:.6f}, w2 = {w2:.6f}")
                         x1, x2, x3, x4, x5, x6, x7, x8 = point_extractor(x_target, w0, w1, w2)
@@ -426,19 +435,40 @@ def main():
                         
                         #print(f"max = {max:.6f} at x = {max_x:.6f}")
                         #print(f"min = {min:.6f} at x = {min_x:.6f}")
-
+                        
                         if (error_max_iteration > max and abort == 0):
                             error_max_iteration = max
                             w0_key = w0
                             w1_key = w1
                             w2_key = w2
                             print("-------------------new key-----------------------------")
+                            count = 0
                         else:
                             print("-------------------no key-----------------------------")
+                            print("count = ", count)
+                            print("count_2 = ", count_2)
+                           # count = count + 1
+                        if (max > pre_max):
+                            count = count + 1
+                        else:
+                            count = 0
+                            #count_2 = 0
+
+                        if (max < 0.017):
+                            count_2 = 0
+                        
+                        if (count > 5):
+                            print("count > 5, break")
+                            count_2 = count_2 + 1
+                            count = 0
+                            break
+                        
+                        pre_max = max
 
                         print(f"error_max_iteration = {error_max_iteration:.6f} max = {max:.6f} at x = {max_x:.6f}")
                         print(f"w0 = {w0:.6f}, w1 = {w1:.6f}, w2 = {w2:.6f}")
                         print("-----------------------------------------------------")
+
 
         print ("-------------------final keys---------------------------")
         print(f"w0 = {w0_key:.6f}, w1 = {w1_key:.6f}, w2 = {w2_key:.6f}")
