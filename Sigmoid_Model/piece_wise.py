@@ -313,7 +313,7 @@ def error_measure(x1, x2, x3, x4, x5, x6, x7, x8, m0, c0, m1, c1, m2, c2, m3, c3
         plt.plot(x, y_true, label='Sigmoid')
         plt.plot(x, y, label='Piecewise')
         #plt.plot(x, error, label='Error')
-        plt.plot(x, error_diff, label='Error diff')
+        #plt.plot(x, error_diff, label='Error diff')
         plt.title('Sigmoid and Piecewise Function')
         plt.axhline(0, color='black', lw=0.01)
         plt.axvline(0, color='black', lw=0.01)
@@ -370,11 +370,11 @@ def main():
     
     error_max_iteration = 0.013718551036547844 #0.015200 #10000
 
-    w0_key = 1.3 #0.3
-    w1_key = 0.5 #0.8
-    w2_key = 0.7 #1.4
+    w0_key = 1.0 #0.3
+    w1_key = 0.9 #0.8
+    w2_key = 0.2 #1.4
 
-    search = 1
+    search = 0
     x_target = min_x
     if search == 1:
     
