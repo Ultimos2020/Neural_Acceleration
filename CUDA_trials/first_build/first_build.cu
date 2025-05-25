@@ -5,7 +5,7 @@
 __global__ void vectorAdd(const float *A, const float *B, float *C, int N) {
     int idx = blockDim.x * blockIdx.x + threadIdx.x;
     if (idx < N) {
-        C[idx] = A[idx] + B[idx];
+        C[idx] = A[idx] * B[idx];
     }
 }
 
@@ -35,8 +35,8 @@ int main() {
     cudaMemcpy(d_B, h_B, bytes, cudaMemcpyHostToDevice);
 
     // 5) Launch kernel with enough blocks to cover N threads
-    int threadsPerBlock = 256;
-    int blocksPerGrid   = (N + threadsPerBlock - 1) / threadsPerBlock;
+    int threadsPerBlock = 32.0; // Number of threads per block
+    int blocksPerGrid   = ceil(N /threadsPerBlock);
     vectorAdd<<<blocksPerGrid, threadsPerBlock>>>(d_A, d_B, d_C, N);
 
     // 6) Copy result device → host
@@ -45,7 +45,7 @@ int main() {
     // 7) Verify
     bool ok = true;
     for (int i = 0; i < N; ++i) {
-        if (fabs(h_C[i] - (h_A[i] + h_B[i])) > 1e-5) {
+        if (fabs(h_C[i] - (h_A[i] * h_B[i])) > 1e-5) {
             ok = false;
             printf("Mismatch at %d: %f vs %f\n", i, h_C[i], h_A[i]+h_B[i]);
             break;
@@ -53,9 +53,13 @@ int main() {
     }
     printf("Result %s\n", ok ? "OK" : "FAILED");
 
-    printf("First 10 results:\n");
-    for (int i = 0; i < 10; ++i) {
-        printf("C[%d] = %f\n", i, h_C[i]);
+    bool check = false;
+
+    if (check){
+        printf("First 32 results:\n");
+        for (int i = 0; i < N; ++i) {
+            printf("A[%f] * B[%f] = %f\n", h_A[i],h_B[i], h_C[i]);
+        }
     }
 
     // 8) Cleanup
