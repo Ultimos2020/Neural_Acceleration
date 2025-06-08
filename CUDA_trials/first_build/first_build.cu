@@ -10,7 +10,7 @@ __global__ void vectorAdd(const float *A, const float *B, float *C, int N) {
 }
 
 int main() {
-    const int N = 1<<20;               // 1M elements
+    const int N = 1<<30;               // 1M elements
     const size_t bytes = N * sizeof(float);
 
     // 1) Allocate host memory
@@ -35,7 +35,7 @@ int main() {
     cudaMemcpy(d_B, h_B, bytes, cudaMemcpyHostToDevice);
 
     // 5) Launch kernel with enough blocks to cover N threads
-    int threadsPerBlock = 32.0; // Number of threads per block
+    int threadsPerBlock = 256.0; // Number of threads per block
     int blocksPerGrid   = ceil(N /threadsPerBlock);
     vectorAdd<<<blocksPerGrid, threadsPerBlock>>>(d_A, d_B, d_C, N);
 
