@@ -1,16 +1,15 @@
 #include <cstdio>
 #include <cuda_runtime.h>
 
-__global__ void col_calculation_kernel(float *M, float *N, float *P, int width, int height) {
+__global__ void row_calculation_kernel(float *M, float *N, float *P, int width, int height) {
 
+    int row = blockIdx.x * blockDim.x + threadIdx.x;
 
-    int col = blockIdx.x * blockDim.x + threadIdx.x;
-
-    if (col < width) {
-        for (int row = 0; row < height; ++row) {
+    if (row < height) {
+        for (int col = 0; col < width; ++col) {
             float Pvalue = 0;
             for (int k = 0; k < width; ++k) {
-             Pvalue += M[row * width + k] * N[k * width + col];
+                Pvalue += M[row * width + k] * N[k * width + col];
             }
             P[row * width + col] = Pvalue;
         }
@@ -49,7 +48,7 @@ int main() {
     int blockSize = 16;
     int gridSize = (number_of_threads + blockSize - 1) / blockSize;
 
-    col_calculation_kernel<<<gridSize, blockSize>>>(d_M, d_N, d_P,width, height);
+    row_calculation_kernel<<<gridSize, blockSize>>>(d_M, d_N, d_P,width, height);
 
     cudaMemcpy(h_P, d_P, width * height * sizeof(float), cudaMemcpyDeviceToHost);
 
